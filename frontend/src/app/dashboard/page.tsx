@@ -5,7 +5,7 @@ export default function DashboardPage() {
   return (
     <main className="flex-1 overflow-y-auto p-6 md:p-10 no-scrollbar pb-24 md:pb-10 bg-surface">
       <div className="max-w-6xl mx-auto space-y-10">
-        
+
         {/* Hero Greeting & Overview */}
         <section className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
@@ -24,9 +24,6 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        {/* Smart Suggestion Bento */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* AI Suggestion Card */}
         {/* Smart Suggestion Bento */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* AI Suggestion Card - HIGH CONTRAST */}
@@ -108,7 +105,7 @@ export default function DashboardPage() {
                 </span>
               </div>
             </div>
-            
+
             {/* Task Card 2 */}
             <div className="bg-surface-container-lowest rounded-3xl p-6 ambient-shadow flex flex-col h-full cursor-pointer group border border-outline-variant/10 hover:border-primary/20 transition-all hover:-translate-y-1">
               <div className="flex justify-between items-start mb-6">
