@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 export default function HorizontalNavbar() {
   const pathname = usePathname();
 
-  const excludedPaths = ['/login', '/register'];
+  const excludedPaths = ['/', '/login', '/register'];
   if (excludedPaths.includes(pathname)) {
     return null;
   }
@@ -24,9 +24,7 @@ export default function HorizontalNavbar() {
       
       {/* Brand */}
       <div className="flex items-center space-x-3">
-        <div className="w-9 h-9 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center font-black text-lg">
-          L
-        </div>
+        <span className="material-symbols-outlined text-primary text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
         <div className="hidden sm:block">
           <h1 className="text-base font-black tracking-tight text-slate-900 dark:text-slate-50 font-headline">LandMyJob</h1>
           <p className="text-[10px] text-slate-500 font-body font-normal -mt-0.5">Intelligent Career Concierge</p>
