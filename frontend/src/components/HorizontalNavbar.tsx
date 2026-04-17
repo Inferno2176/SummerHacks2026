@@ -12,9 +12,11 @@ export default function HorizontalNavbar() {
   }
 
   const navItems = [
+    { name: 'Dashboard', href: '/dashboard', icon: 'check_circle' },
+    { name: 'Job Feed', href: '/jobs', icon: 'explore' },
+    { name: 'Applications', href: '/applications', icon: 'assessment' },
+    { name: 'Cover Letter', href: '/cover-letter', icon: 'description' },
     { name: 'AI Inbox', href: '/inbox', icon: 'inbox' },
-    { name: 'Tasks', href: '/dashboard', icon: 'check_circle' },
-    { name: 'Agent Hub', href: '/agents', icon: 'smart_toy' },
   ];
 
   return (
@@ -26,8 +28,8 @@ export default function HorizontalNavbar() {
           L
         </div>
         <div className="hidden sm:block">
-          <h1 className="text-base font-black tracking-tight text-slate-900 dark:text-slate-50 font-headline">LifeOS</h1>
-          <p className="text-[10px] text-slate-500 font-body font-normal -mt-0.5">Intelligent Concierge</p>
+          <h1 className="text-base font-black tracking-tight text-slate-900 dark:text-slate-50 font-headline">LandMyJob</h1>
+          <p className="text-[10px] text-slate-500 font-body font-normal -mt-0.5">Intelligent Career Concierge</p>
         </div>
       </div>
 
@@ -39,9 +41,9 @@ export default function HorizontalNavbar() {
             <Link 
               key={item.href}
               href={item.href}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 font-manrope text-sm font-semibold
+              className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-manrope text-sm font-semibold
                 ${isActive 
-                  ? 'bg-primary/10 text-primary scale-105' 
+                   ? 'bg-primary/10 text-primary scale-105 shadow-sm' 
                   : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100/50'
                 }`}
             >

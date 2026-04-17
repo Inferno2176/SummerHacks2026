@@ -27,29 +27,32 @@ export default function DashboardPage() {
         {/* Smart Suggestion Bento */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* AI Suggestion Card */}
-          <div className="md:col-span-2 bg-surface-container-lowest rounded-lg p-6 relative overflow-hidden ambient-shadow flex flex-col justify-between group">
+        {/* Smart Suggestion Bento */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* AI Suggestion Card - HIGH CONTRAST */}
+          <div className="md:col-span-2 bg-primary rounded-3xl p-8 relative overflow-hidden shadow-2xl shadow-primary/20 flex flex-col justify-between group border border-white/10">
             {/* Decorative Gradient Blob */}
-            <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary-fixed/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
             <div className="relative z-10">
-              <div className="flex items-center space-x-2 mb-4">
-                <span className="material-symbols-outlined text-primary text-xl">auto_awesome</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-primary font-headline">Smart Suggestion</span>
+              <div className="flex items-center space-x-2 mb-6">
+                <span className="material-symbols-outlined text-white text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white opacity-80 font-manrope">Smart Suggestion</span>
               </div>
-              <h3 className="text-2xl font-bold font-headline text-on-surface mb-2">Finalize Q3 Presentation Deck</h3>
-              <p className="text-on-surface-variant font-body mb-6 max-w-md">Based on your upcoming meeting at 2 PM, tackling this now aligns perfectly with your focus blocks.</p>
-              <div className="flex items-center space-x-4">
-                <span className="inline-flex items-center px-3 py-1 rounded-sm bg-error-container/20 text-error font-medium text-xs font-label">
-                  <span className="w-1.5 h-1.5 rounded-full bg-error mr-1.5"></span>
+              <h3 className="text-3xl font-black font-manrope text-white mb-2 uppercase tracking-tight">Finalize Q3 Presentation Deck</h3>
+              <p className="text-white/80 font-body text-base mb-8 max-w-md font-medium leading-relaxed">Based on your upcoming meeting at 2 PM, tackling this now aligns perfectly with your focus blocks.</p>
+              <div className="flex items-center space-x-6">
+                <span className="inline-flex items-center px-4 py-1.5 rounded-lg bg-white/20 text-white font-black text-[10px] uppercase tracking-wider border border-white/10">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white mr-2 animate-pulse"></span>
                   High Priority
                 </span>
-                <span className="text-sm text-on-surface-variant font-body flex items-center">
-                  <span className="material-symbols-outlined text-sm mr-1">schedule</span>
+                <span className="text-xs text-white/70 font-black uppercase tracking-widest flex items-center">
+                  <span className="material-symbols-outlined text-base mr-2">schedule</span>
                   Due Today, 1:00 PM
                 </span>
               </div>
             </div>
-            <div className="relative z-10 mt-8 flex justify-end">
-              <button className="px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full font-label font-medium hover:opacity-90 transition-opacity flex items-center space-x-2 shadow-[0_8px_16px_rgba(74,75,215,0.2)]">
+            <div className="relative z-10 mt-10 flex justify-end">
+              <button className="px-8 py-4 bg-white text-primary rounded-xl font-black text-xs uppercase tracking-widest hover:bg-surface transition-all flex items-center space-x-2 shadow-xl active:scale-[0.98]">
                 <span>Start Focus Session</span>
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </button>
@@ -57,19 +60,19 @@ export default function DashboardPage() {
           </div>
 
           {/* Mini Stats / Progress */}
-          <div className="bg-secondary-fixed/10 rounded-lg p-6 ambient-shadow flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary-container/30 rounded-full blur-2xl pointer-events-none"></div>
+          <div className="bg-surface-container-lowest rounded-3xl p-8 ambient-shadow flex flex-col justify-between relative overflow-hidden border border-outline-variant/10">
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary-container/10 rounded-full blur-2xl pointer-events-none"></div>
             <div>
-              <h4 className="font-headline font-semibold text-on-surface mb-1">Daily Progress</h4>
-              <p className="text-xs text-on-surface-variant font-body">3 of 8 tasks completed</p>
+              <h4 className="font-manrope font-black text-lg text-on-surface mb-1 uppercase tracking-tight">Daily Progress</h4>
+              <p className="text-xs text-on-surface-variant font-black opacity-60 uppercase tracking-tighter">3 of 8 tasks completed</p>
             </div>
             <div className="flex-1 flex items-center justify-center py-6">
               {/* Faux Donut Chart */}
               <div className="relative w-32 h-32 flex items-center justify-center rounded-full before:absolute before:inset-0 before:rounded-full before:border-[12px] before:border-surface-container-high after:absolute after:inset-0 after:rounded-full after:border-[12px] after:border-secondary after:border-t-transparent after:border-r-transparent after:-rotate-45">
-                <div className="text-3xl font-black font-headline text-on-surface">38<span className="text-lg text-on-surface-variant">%</span></div>
+                <div className="text-3xl font-black font-manrope text-on-surface">38<span className="text-lg text-on-surface-variant">%</span></div>
               </div>
             </div>
-            <div className="flex justify-between items-center text-xs font-label text-on-surface-variant">
+            <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-on-surface-variant/70">
               <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-secondary mr-2"></span>Done</span>
               <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-surface-container-high mr-2"></span>Remaining</span>
             </div>
@@ -78,70 +81,70 @@ export default function DashboardPage() {
 
         {/* Task Grid */}
         <section>
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold font-headline text-on-surface">Up Next</h3>
-            <div className="flex space-x-2 text-sm font-label">
-              <button className="px-4 py-1.5 rounded-full bg-surface-container-lowest text-on-surface ring-1 ring-outline-variant/15 font-medium">All</button>
-              <button className="px-4 py-1.5 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors">Work</button>
-              <button className="px-4 py-1.5 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors">Personal</button>
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-xl font-black font-manrope text-on-surface uppercase tracking-tight">Up Next</h3>
+            <div className="flex space-x-2">
+              <button className="px-5 py-2 rounded-xl bg-on-surface text-surface font-black text-[10px] uppercase tracking-widest">All</button>
+              <button className="px-5 py-2 rounded-xl text-on-surface-variant font-black text-[10px] uppercase tracking-widest hover:bg-surface-container-low transition-colors">Work</button>
+              <button className="px-5 py-2 rounded-xl text-on-surface-variant font-black text-[10px] uppercase tracking-widest hover:bg-surface-container-low transition-colors">Personal</button>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Task Card 1 */}
-            <div className="bg-surface-container-lowest rounded-lg p-5 ambient-shadow-hover relative flex flex-col h-full cursor-pointer group border border-transparent hover:border-outline-variant/10 transition-colors">
-              <div className="flex justify-between items-start mb-4">
-                <div className="p-2 bg-tertiary-container/20 rounded-xl text-tertiary">
-                  <span className="material-symbols-outlined text-lg">fitness_center</span>
+            <div className="bg-surface-container-lowest rounded-3xl p-6 ambient-shadow flex flex-col h-full cursor-pointer group border border-outline-variant/10 hover:border-primary/20 transition-all hover:-translate-y-1">
+              <div className="flex justify-between items-start mb-6">
+                <div className="p-2.5 bg-tertiary-container/20 rounded-xl text-tertiary border border-tertiary/10">
+                  <span className="material-symbols-outlined text-xl">fitness_center</span>
                 </div>
-                <span className="inline-flex items-center px-2.5 py-1 rounded-sm bg-surface-container-high text-on-surface-variant font-medium text-[10px] font-label uppercase tracking-wide">To Do</span>
+                <span className="inline-flex items-center px-3 py-1 rounded-lg bg-surface-container-high text-on-surface-variant font-black text-[10px] uppercase tracking-widest">To Do</span>
               </div>
-              <h4 className="font-headline font-bold text-on-surface text-lg mb-2 group-hover:text-primary transition-colors leading-tight">Gym: Upper Body Routine</h4>
-              <p className="text-sm text-on-surface-variant font-body mb-6 flex-1 line-clamp-2">Focus on progressive overload. Remember to stretch before starting.</p>
-              <div className="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/10">
-                <span className="inline-flex items-center px-2 py-1 rounded-sm bg-surface-container-low text-on-surface-variant font-medium text-xs font-label">Medium</span>
-                <span className="text-xs text-on-surface-variant font-body flex items-center">
-                  <span className="material-symbols-outlined text-[14px] mr-1">event</span>
+              <h4 className="font-manrope font-black text-xl text-on-surface mb-2 group-hover:text-primary transition-colors leading-tight tracking-tight uppercase">Gym: Upper Body Routine</h4>
+              <p className="text-sm text-on-surface-variant font-body mb-8 flex-1 line-clamp-2 font-medium opacity-80 leading-relaxed">Focus on progressive overload. Remember to stretch before starting.</p>
+              <div className="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/5">
+                <span className="inline-flex items-center px-3 py-1 bg-surface-container-low text-on-surface-variant font-black text-[10px] uppercase tracking-tighter rounded-lg">Medium</span>
+                <span className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest flex items-center">
+                  <span className="material-symbols-outlined text-base mr-2 opacity-40">event</span>
                   Today, 5:30 PM
                 </span>
               </div>
             </div>
             
             {/* Task Card 2 */}
-            <div className="bg-surface-container-lowest rounded-lg p-5 ambient-shadow-hover relative flex flex-col h-full cursor-pointer group border border-transparent hover:border-outline-variant/10 transition-colors">
-              <div className="flex justify-between items-start mb-4">
-                <div className="p-2 bg-primary-fixed/20 rounded-xl text-primary">
-                  <span className="material-symbols-outlined text-lg">payments</span>
+            <div className="bg-surface-container-lowest rounded-3xl p-6 ambient-shadow flex flex-col h-full cursor-pointer group border border-outline-variant/10 hover:border-primary/20 transition-all hover:-translate-y-1">
+              <div className="flex justify-between items-start mb-6">
+                <div className="p-2.5 bg-primary/10 rounded-xl text-primary border border-primary/10">
+                  <span className="material-symbols-outlined text-xl">payments</span>
                 </div>
-                <span className="inline-flex items-center px-2.5 py-1 rounded-sm bg-secondary-container/20 text-secondary-dim font-medium text-[10px] font-label uppercase tracking-wide">In Progress</span>
+                <span className="inline-flex items-center px-3 py-1 rounded-lg bg-secondary-container/20 text-secondary font-black text-[10px] uppercase tracking-widest">In Progress</span>
               </div>
-              <h4 className="font-headline font-bold text-on-surface text-lg mb-2 group-hover:text-primary transition-colors leading-tight">Review Monthly Budget</h4>
-              <p className="text-sm text-on-surface-variant font-body mb-6 flex-1 line-clamp-2">Categorize recent expenses and adjust savings goal for the upcoming trip.</p>
-              <div className="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/10">
-                <span className="inline-flex items-center px-2 py-1 rounded-sm bg-surface-container-low text-on-surface-variant font-medium text-xs font-label">Low</span>
-                <span className="text-xs text-on-surface-variant font-body flex items-center">
-                  <span className="material-symbols-outlined text-[14px] mr-1">event</span>
+              <h4 className="font-manrope font-black text-xl text-on-surface mb-2 group-hover:text-primary transition-colors leading-tight tracking-tight uppercase">Review Monthly Budget</h4>
+              <p className="text-sm text-on-surface-variant font-body mb-8 flex-1 line-clamp-2 font-medium opacity-80 leading-relaxed">Categorize recent expenses and adjust savings goal for the upcoming trip.</p>
+              <div className="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/5">
+                <span className="inline-flex items-center px-3 py-1 bg-surface-container-low text-on-surface-variant font-black text-[10px] uppercase tracking-tighter rounded-lg">Low</span>
+                <span className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest flex items-center">
+                  <span className="material-symbols-outlined text-base mr-2 opacity-40">event</span>
                   Tomorrow
                 </span>
               </div>
             </div>
 
             {/* Task Card 3 */}
-            <div className="bg-surface-container-lowest rounded-lg p-5 ambient-shadow-hover relative flex flex-col h-full cursor-pointer group border border-transparent hover:border-outline-variant/10 transition-colors">
-              <div className="flex justify-between items-start mb-4">
-                <div className="p-2 bg-secondary-fixed/20 rounded-xl text-secondary">
-                  <span className="material-symbols-outlined text-lg">shopping_cart</span>
+            <div className="bg-surface-container-lowest rounded-3xl p-6 ambient-shadow flex flex-col h-full cursor-pointer group border border-outline-variant/10 hover:border-primary/20 transition-all hover:-translate-y-1">
+              <div className="flex justify-between items-start mb-6">
+                <div className="p-2.5 bg-secondary/10 rounded-xl text-secondary border border-secondary/10">
+                  <span className="material-symbols-outlined text-xl">shopping_cart</span>
                 </div>
-                <span className="inline-flex items-center px-2.5 py-1 rounded-sm bg-surface-container-high text-on-surface-variant font-medium text-[10px] font-label uppercase tracking-wide">To Do</span>
+                <span className="inline-flex items-center px-3 py-1 rounded-lg bg-surface-container-high text-on-surface-variant font-black text-[10px] uppercase tracking-widest">To Do</span>
               </div>
-              <h4 className="font-headline font-bold text-on-surface text-lg mb-2 group-hover:text-primary transition-colors leading-tight">Groceries for Dinner Party</h4>
-              <p className="text-sm text-on-surface-variant font-body mb-6 flex-1 line-clamp-2">Pick up fresh produce, wine, and ingredients for the lasagna.</p>
-              <div className="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/10">
-                <span className="inline-flex items-center px-2 py-1 rounded-sm bg-error-container/20 text-error font-medium text-xs font-label">
-                  <span className="w-1.5 h-1.5 rounded-full bg-error mr-1.5"></span>
+              <h4 className="font-manrope font-black text-xl text-on-surface mb-2 group-hover:text-primary transition-colors leading-tight tracking-tight uppercase">Groceries for Dinner Party</h4>
+              <p className="text-sm text-on-surface-variant font-body mb-8 flex-1 line-clamp-2 font-medium opacity-80 leading-relaxed">Pick up fresh produce, wine, and ingredients for the lasagna.</p>
+              <div className="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/5">
+                <span className="inline-flex items-center px-3 py-1 bg-error-container/20 text-error font-black text-[10px] uppercase tracking-tighter rounded-lg">
+                  <span className="w-1.5 h-1.5 rounded-full bg-error mr-2"></span>
                   High
                 </span>
-                <span className="text-xs text-error font-body flex items-center font-medium">
-                  <span className="material-symbols-outlined text-[14px] mr-1">event</span>
+                <span className="text-[10px] text-error font-black uppercase tracking-widest flex items-center">
+                  <span className="material-symbols-outlined text-base mr-2 opacity-40">event</span>
                   Today, 4:00 PM
                 </span>
               </div>
