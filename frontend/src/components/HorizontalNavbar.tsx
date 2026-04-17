@@ -71,9 +71,9 @@ export default function HorizontalNavbar() {
           <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-error rounded-full border border-white"></span>
         </button>
 
-        <div className="w-9 h-9 rounded-full bg-surface-container-high overflow-hidden ring-2 ring-white ambient-shadow cursor-pointer">
+        <Link href="/profile" className="w-9 h-9 rounded-full bg-surface-container-high overflow-hidden ring-2 ring-white ambient-shadow cursor-pointer block hover:ring-primary/50 transition-all">
           <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-PF9XwC43wOc_hRgLrzAYXsZjU0jXOuwuoT2unSUJ8MLIEgkLuTtkgyBz0I1hYAFTKDtRWAfYkLMcV4tqLhCQF8WQNymvONZKoxfX0TL5vJu8RRQQBV9RJV3OQdXSShBXO41Bn1125gArjdtt5hGx-HEwMb8XSE2oZyPlPC61aQxGZBb8njGah7MEiqOnJWlaIFvew2s8RizW1MOfIv6Ye8pyh8A9P7YqnX_XZJ6eLWa4n8HiDgHAOHdPTcks5buddEfddG6S_BnY" className="w-full h-full object-cover" alt="User" />
-        </div>
+        </Link>
       </div>
     </nav>
   );

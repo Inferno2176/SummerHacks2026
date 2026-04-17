@@ -37,10 +37,10 @@ const letters = [
 export default function CoverLetterPage() {
   return (
     <div className="flex-1 bg-surface min-h-[calc(100vh-4.5rem)] flex flex-col">
-      <main className="flex-1 p-8 xl:p-12 max-w-7xl mx-auto w-full pb-32">
+      <main className="flex-1 p-6 xl:p-8 max-w-7xl mx-auto w-full pb-8">
 
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
           <div>
             <h2 className="text-4xl font-manrope font-black text-on-surface tracking-tight mb-2 uppercase">Cover Letter</h2>
             <p className="text-on-surface-variant text-lg font-body font-medium opacity-70">Draft, optimize, and manage your tailored letters.</p>
@@ -52,8 +52,8 @@ export default function CoverLetterPage() {
         </div>
 
         {/* Upload Zone */}
-        <div className="mb-12 bg-white/50 backdrop-blur-sm rounded-3xl p-12 border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-surface-container-low/50 transition-all group ambient-shadow">
-          <div className="w-16 h-16 rounded-xl bg-primary-container/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+        <div className="mb-6 bg-white/50 backdrop-blur-sm rounded-3xl p-8 border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-surface-container-low/50 transition-all group ambient-shadow">
+          <div className="w-14 h-14 rounded-xl bg-primary-container/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
             <span className="material-symbols-outlined text-3xl text-primary font-bold">upload_file</span>
           </div>
           <h3 className="text-xl font-manrope font-black text-on-surface mb-2 uppercase tracking-tight">Drag & Drop your cover letter</h3>
@@ -73,12 +73,12 @@ export default function CoverLetterPage() {
                 </button>
               </div>
 
-              <div className={`w-14 h-14 rounded-xl ${letter.theme} flex items-center justify-center mb-6 border border-outline-variant/5`}>
-                <span className={`material-symbols-outlined ${letter.iconColor} text-2xl`} style={{ fontVariationSettings: "'FILL' 1" }}>description</span>
+              <div className={`w-12 h-12 rounded-xl ${letter.theme} flex items-center justify-center mb-4 border border-outline-variant/5`}>
+                <span className={`material-symbols-outlined ${letter.iconColor} text-xl`} style={{ fontVariationSettings: "'FILL' 1" }}>description</span>
               </div>
 
               <h4 className="font-manrope font-black text-lg text-on-surface mb-1 truncate pr-16 uppercase tracking-tight">{letter.name}</h4>
-              <p className="text-xs text-on-surface-variant mb-8 font-black opacity-60 uppercase tracking-tighter">Edited {letter.edited}</p>
+              <p className="text-xs text-on-surface-variant mb-4 font-black opacity-60 uppercase tracking-tighter">Edited {letter.edited}</p>
 
               <div className="mt-auto flex items-center justify-between pt-4 border-t border-outline-variant/5">
                 <span className={`inline-flex items-center px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-tighter ${letter.theme.replace('/10', '/30')} ${letter.iconColor}`}>

@@ -45,117 +45,45 @@ const feedItems = [
 
 export default function ApplicationsPage() {
   return (
-    <div className="flex-1 bg-surface min-h-[calc(100vh-4.5rem)] flex flex-col xl:flex-row gap-8 p-6 md:p-8 max-w-screen-2xl mx-auto w-full">
+    <div className="flex-1 bg-surface min-h-[calc(100vh-4.5rem)] flex flex-col xl:flex-row p-4 md:p-6 max-w-screen-2xl mx-auto w-full overflow-hidden">
       
-      {/* Left Column: Application Tracker */}
-      <div className="flex-1 flex flex-col gap-8">
-        <header>
-          <h1 className="text-4xl font-manrope font-extrabold text-on-surface tracking-tight mb-2">Applications</h1>
-          <p className="text-on-surface-variant text-lg font-body">Tracking your journey to the next opportunity.</p>
-        </header>
-
-        {/* Filters & Search */}
-        <div className="flex flex-col sm:flex-row gap-4 items-center bg-surface-container-low p-2 rounded-full border border-outline-variant/10 shadow-sm">
-          <div className="flex-1 relative w-full">
-            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-            <input className="w-full bg-surface-container-lowest rounded-full py-3 pl-12 pr-4 border-none focus:ring-2 focus:ring-primary text-sm font-body shadow-sm placeholder-on-surface-variant/50" placeholder="Search roles, companies..." type="text"/>
-          </div>
-          <div className="flex gap-2 pr-2">
-            <button className="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold font-body whitespace-nowrap shadow-md">All (12)</button>
-            <button className="bg-surface-container-lowest text-on-surface hover:bg-surface-container px-5 py-2.5 rounded-full text-sm font-medium font-body whitespace-nowrap transition-colors border border-outline-variant/15">Interviewing (3)</button>
-            <button className="bg-surface-container-lowest text-on-surface hover:bg-surface-container px-5 py-2.5 rounded-full text-sm font-medium font-body whitespace-nowrap transition-colors border border-outline-variant/15">Applied (8)</button>
-          </div>
-        </div>
-
-        {/* Tracker Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {applications.map((app, idx) => (
-            <article key={app.id} className={`${idx === 0 ? 'bg-secondary text-on-secondary shadow-lg shadow-secondary/20 ring-4 ring-secondary/5' : 'bg-surface-container-lowest'} rounded-3xl p-6 ambient-shadow flex flex-col gap-6 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300 border border-outline-variant/10`}>
-              {/* Decorative Accent for Featured */}
-              {idx === 0 && <div className="absolute -top-10 -right-10 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>}
-
-              <div className="flex justify-between items-start">
-                <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-xl ${idx === 0 ? 'bg-white' : 'bg-surface-container'} flex items-center justify-center overflow-hidden border border-outline-variant/10 p-2`}>
-                    <img src={app.logo} alt={app.company} className="w-full h-full object-contain" />
-                  </div>
-                  <div>
-                    <h3 className={`font-manrope font-bold text-xl ${idx === 0 ? 'text-white' : 'text-on-surface'}`}>{app.title}</h3>
-                    <p className={`text-sm font-body ${idx === 0 ? 'text-white/70' : 'text-on-surface-variant'}`}>{app.company} • {app.location}</p>
-                  </div>
-                </div>
-                <span className={`${idx === 0 ? 'bg-white/20 text-white border-white/10' : app.statusColor + ' border-outline-variant/5'} px-3 py-1 rounded-lg text-xs font-black font-body flex items-center gap-1 border`}>
-                  <span className="material-symbols-outlined text-[14px]">{app.status === 'Interview' ? 'calendar_clock' : app.status === 'Applied' ? 'send' : 'bookmark'}</span>
-                  {app.status}
-                </span>
-              </div>
-
-              {app.nextStep && (
-                <div className={`${idx === 0 ? 'bg-white/10' : 'bg-surface-container-low'} rounded-2xl p-4 mt-auto`}>
-                  <p className={`text-[10px] font-black uppercase tracking-widest mb-2 ${idx === 0 ? 'text-white/60' : 'text-on-surface/60'}`}>{app.status === 'Interview' ? 'Next Step' : 'Timeline'}</p>
-                  {app.progress && (
-                    <div className={`w-full rounded-full h-1.5 mb-2 ${idx === 0 ? 'bg-white/10' : 'bg-surface-variant'}`}>
-                      <div className={`${idx === 0 ? 'bg-white' : 'bg-primary'} h-1.5 rounded-full`} style={{ width: `${app.progress}%` }}></div>
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <span className={`text-xs flex items-center gap-1 font-bold ${idx === 0 ? 'text-white/90' : 'text-on-surface-variant'}`}>
-                      {app.nextStepIcon && <span className="material-symbols-outlined text-[14px]">{app.nextStepIcon}</span>}
-                      {app.nextStep}
-                    </span>
-                    {app.action && <button className={`text-sm font-black transition-colors ${idx === 0 ? 'text-white' : 'text-primary'}`}>{app.action}</button>}
-                  </div>
-                </div>
-              )}
-              
-              {!app.nextStep && (idx !== 0) && (
-                <div className="mt-auto flex gap-3">
-                  <button className="flex-1 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-xl py-3 text-[10px] font-black font-body transition-colors uppercase tracking-widest">Draft Cover Letter</button>
-                  <button className="bg-primary hover:bg-primary-dim text-on-primary rounded-xl px-6 py-3 text-[10px] font-black font-body transition-colors shadow-sm shadow-primary/20 uppercase tracking-widest">Apply</button>
-                </div>
-              )}
-            </article>
-          ))}
-        </div>
-      </div>
-
-      {/* Right Column: Lumina Activity Feed */}
-      <aside className="w-full xl:w-[400px] shrink-0">
-        <div className="bg-surface-container-lowest rounded-3xl p-8 ambient-shadow sticky top-24 border border-outline-variant/10">
-          <div className="flex items-center gap-4 mb-8">
+      {/* Left Column: Lumina Activity Feed (Blended) */}
+      <aside className="w-full xl:w-[260px] shrink-0 -mt-2">
+        <div className="sticky top-6">
+          <div className="flex items-center gap-3 mb-6">
             <div className="relative">
-              <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full animate-pulse"></div>
-              <div className="w-14 h-14 bg-gradient-to-tr from-primary to-primary-fixed rounded-full flex items-center justify-center relative z-10 shadow-lg border-2 border-surface-container-lowest text-white">
-                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
+              <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full animate-pulse"></div>
+              <div className="w-10 h-10 bg-gradient-to-tr from-primary to-primary-fixed rounded-full flex items-center justify-center relative z-10 shadow-sm border border-surface-container-lowest text-white">
+                <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
               </div>
             </div>
             <div>
-              <h2 className="font-manrope font-black text-2xl text-on-surface">Lumina</h2>
-              <p className="text-sm text-primary font-bold flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-secondary-fixed"></span> Active Concierge
+              <h2 className="font-manrope font-black text-xl text-on-surface">Lumina</h2>
+              <p className="text-xs text-primary font-bold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span> Active Concierge
               </p>
             </div>
           </div>
 
-          <div className="relative space-y-8 before:absolute before:inset-y-0 before:left-[19px] before:w-px before:bg-gradient-to-b before:from-primary/20 before:to-transparent ml-2">
+          <div className="relative space-y-6 before:absolute before:inset-y-0 before:left-[15px] before:w-px before:bg-gradient-to-b before:from-primary/20 before:to-transparent ml-1">
             {feedItems.map((item) => (
-              <div key={item.id} className="relative pl-10 group">
-                <div className="absolute left-[-5px] top-1 w-12 h-12 bg-surface-container-lowest rounded-full flex items-center justify-center border-[6px] border-surface-container-lowest shadow-sm group-hover:scale-110 transition-transform z-10">
-                   <span className={`material-symbols-outlined ${item.iconColor} text-sm`} style={{ fontVariationSettings: "'FILL' 1" }}>{item.icon}</span>
+              <div key={item.id} className="relative pl-8 group">
+                <div className="absolute left-[-6px] top-1 w-8 h-8 bg-surface rounded-full flex items-center justify-center border-[4px] border-surface shadow-sm z-10">
+                   <span className={`material-symbols-outlined ${item.iconColor} text-[14px]`} style={{ fontVariationSettings: "'FILL' 1" }}>{item.icon}</span>
                 </div>
-                <p className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant/60 mb-1">{item.time}</p>
-                <div className="bg-surface-container-low/50 rounded-2xl p-4 group-hover:bg-surface-container transition-colors border border-outline-variant/5">
-                  <h4 className="font-manrope font-bold text-on-surface text-sm mb-1">{item.title}</h4>
-                  <p className="text-xs text-on-surface-variant font-medium leading-relaxed">{item.desc}</p>
+                <p className="text-[9px] uppercase tracking-widest font-bold text-on-surface-variant/60 mb-0.5">{item.time}</p>
+                <div className="bg-surface-container-low/30 rounded-xl p-3 group-hover:bg-surface-container/50 transition-colors">
+                  <h4 className="font-manrope font-bold text-on-surface text-xs mb-0.5">{item.title}</h4>
+                  <p className="text-[11px] text-on-surface-variant font-medium leading-snug">{item.desc}</p>
                   {item.action && (
-                    <button className="mt-3 text-xs font-bold text-primary flex items-center gap-1 hover:text-primary-dim transition-colors uppercase tracking-wider">
-                      <span className="material-symbols-outlined text-[14px]">visibility</span> {item.action}
+                    <button className="mt-2 text-[10px] font-bold text-primary flex items-center gap-1 hover:text-primary-dim transition-colors uppercase tracking-wider">
+                      <span className="material-symbols-outlined text-[12px]">visibility</span> {item.action}
                     </button>
                   )}
                   {item.tags && (
-                    <div className="flex gap-2 mt-3">
+                    <div className="flex gap-1.5 mt-2">
                       {item.tags.map(tag => (
-                        <span key={tag} className="bg-surface-container-lowest px-2 py-1 rounded-lg text-[10px] font-bold border border-outline-variant/20 shadow-sm">{tag}</span>
+                        <span key={tag} className="bg-surface-container-low px-1.5 py-0.5 rounded-md text-[9px] font-bold border border-outline-variant/10 text-on-surface-variant">{tag}</span>
                       ))}
                     </div>
                   )}
@@ -165,6 +93,119 @@ export default function ApplicationsPage() {
           </div>
         </div>
       </aside>
+
+      {/* Main Divider for AI Column */}
+      <div className="hidden xl:block w-px bg-outline-variant/30 mx-6 self-stretch shrink-0 mt-4"></div>
+
+      {/* Main Column: Application Tracker */}
+      <div className="flex-1 flex flex-col gap-6 min-w-0 h-full">
+        
+        {/* Header inline with Search & Filters */}
+        <header className="flex flex-col 2xl:flex-row 2xl:items-center justify-between gap-4 w-full shrink-0">
+          <div className="shrink-0">
+            <h1 className="text-3xl font-manrope font-extrabold text-on-surface tracking-tight mb-1">Applications</h1>
+            <p className="text-on-surface-variant text-sm font-body">Tracking your journey to the next opportunity.</p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 items-center bg-surface-container-low p-1.5 rounded-full border border-outline-variant/10 shadow-sm w-full 2xl:w-auto">
+            <div className="flex-1 relative w-full min-w-48">
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+              <input className="w-full bg-surface-container-lowest rounded-full py-2 pl-9 pr-3 border-none focus:ring-2 focus:ring-primary text-xs font-body shadow-sm placeholder-on-surface-variant/50" placeholder="Search roles, companies..." type="text"/>
+            </div>
+            <div className="flex gap-1.5 pr-1.5 overflow-x-auto w-full sm:w-auto custom-scrollbar pb-1 sm:pb-0">
+              <button className="bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-semibold font-body whitespace-nowrap shadow-sm">All (12)</button>
+              <button className="bg-surface-container-lowest text-on-surface hover:bg-surface-container px-4 py-2 rounded-full text-xs font-medium font-body whitespace-nowrap transition-colors border border-outline-variant/15">Interviewing (3)</button>
+              <button className="bg-surface-container-lowest text-on-surface hover:bg-surface-container px-4 py-2 rounded-full text-xs font-medium font-body whitespace-nowrap transition-colors border border-outline-variant/15">Applied (8)</button>
+            </div>
+          </div>
+        </header>
+
+        {/* Tracker Horizontal Kanban Sections (Vertically Stacked Items) */}
+        <div className="flex flex-col xl:flex-row w-full flex-1 min-h-0 pt-2">
+          {[
+            { label: 'Interviews', status: 'Interview' }, 
+            { label: 'Applied', status: 'Applied' }, 
+            { label: 'Saved', status: 'Saved' }
+          ].map((section, index, array) => {
+            const sectionApps = applications.filter(a => a.status === section.status);
+            // Count total non-empty columns to know when to render a right-border
+            const activeSections = array.filter(s => applications.filter(a => a.status === s.status).length > 0);
+            if (sectionApps.length === 0) return null;
+            
+            const isLastActive = activeSections.length > 0 ? activeSections[activeSections.length - 1].label === section.label : false;
+
+            return (
+              <React.Fragment key={section.label}>
+                <section className="flex-1 flex flex-col gap-4 w-full min-w-[260px] px-1">
+                  <h3 className="text-lg font-manrope font-black text-on-surface pl-3 border-l-4 border-primary">
+                    {section.label} <span className="text-on-surface-variant text-sm ml-1 opacity-50">({sectionApps.length})</span>
+                  </h3>
+                  {/* Vertical scroll container */}
+                  <div className="flex flex-col overflow-y-auto overflow-x-hidden gap-4 pb-4 w-full h-full custom-scrollbar pr-2">
+                    {sectionApps.map((app) => (
+                      <article key={app.id} className={`w-full shrink-0 h-[175px] ${app.status === 'Interview' ? 'bg-secondary text-on-secondary shadow-md ring-2 ring-secondary/10' : 'bg-surface-container-lowest'} rounded-2xl p-4 ambient-shadow flex flex-col relative overflow-hidden group border border-outline-variant/10 hover:-translate-y-0.5 transition-transform`}>
+                        {/* Decorative Accent for Featured */}
+                        {app.status === 'Interview' && <div className="absolute -top-10 -right-10 w-20 h-20 bg-white/10 rounded-full blur-xl pointer-events-none"></div>}
+
+                        <div className="flex justify-between items-start">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-10 h-10 rounded-xl ${app.status === 'Interview' ? 'bg-white' : 'bg-surface-container'} flex items-center justify-center overflow-hidden border border-outline-variant/10 p-1.5 shrink-0`}>
+                              <img src={app.logo} alt={app.company} className="w-full h-full object-contain" />
+                            </div>
+                            <div className="min-w-0">
+                              <h3 className={`font-manrope font-bold text-base truncate ${app.status === 'Interview' ? 'text-white' : 'text-on-surface'}`}>{app.title}</h3>
+                              <p className={`text-xs font-body truncate ${app.status === 'Interview' ? 'text-white/70' : 'text-on-surface-variant'}`}>{app.company} • {app.location}</p>
+                            </div>
+                          </div>
+                          <span className={`${app.status === 'Interview' ? 'bg-white/20 text-white border-white/10' : app.statusColor + ' border-outline-variant/5'} shrink-0 px-2 py-0.5 rounded-md text-[10px] font-black font-body flex items-center gap-1 border ml-2`}>
+                            <span className="material-symbols-outlined text-[12px]">
+                              {app.status === 'Interview' ? 'calendar_clock' : app.status === 'Applied' ? 'send' : 'bookmark'}
+                            </span>
+                            {app.status}
+                          </span>
+                        </div>
+
+                        {app.nextStep && (
+                          <div className={`${app.status === 'Interview' ? 'bg-white/10' : 'bg-surface-container-low'} rounded-xl p-3 mt-auto`}>
+                            <p className={`text-[11px] font-black uppercase tracking-widest mb-1.5 flex items-center justify-between ${app.status === 'Interview' ? 'text-white/60' : 'text-on-surface/60'}`}>
+                              {app.status === 'Interview' ? 'Next Step' : 'Timeline'}
+                              {app.progress !== undefined && <span>{app.progress}%</span>}
+                            </p>
+                            {app.progress !== undefined && (
+                              <div className={`w-full rounded-full h-1.5 mb-2 ${app.status === 'Interview' ? 'bg-white/10' : 'bg-surface-variant'}`}>
+                                <div className={`${app.status === 'Interview' ? 'bg-white' : 'bg-primary'} h-1.5 rounded-full`} style={{ width: `${app.progress}%` }}></div>
+                              </div>
+                            )}
+                            <div className="flex items-center justify-between mt-1 gap-2">
+                              <span className={`text-[13px] flex items-center gap-1 font-bold line-clamp-1 ${app.status === 'Interview' ? 'text-white/90' : 'text-on-surface-variant'}`}>
+                                {app.nextStepIcon && <span className="material-symbols-outlined text-[14px] shrink-0">{app.nextStepIcon}</span>}
+                                <span className="truncate">{app.nextStep}</span>
+                              </span>
+                              {app.action && <button className={`text-sm font-black transition-colors shrink-0 ${app.status === 'Interview' ? 'text-white' : 'text-primary'}`}>{app.action}</button>}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {!app.nextStep && (
+                          <div className="mt-auto flex gap-2">
+                            <button className="flex-1 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg py-2.5 text-[11px] font-black font-body transition-colors uppercase tracking-widest truncate">Draft Cover</button>
+                            <button className="bg-primary hover:bg-primary-dim text-on-primary rounded-lg px-5 py-2.5 text-[11px] font-black font-body transition-colors shadow-sm shadow-primary/20 uppercase tracking-widest shrink-0">Apply</button>
+                          </div>
+                        )}
+                      </article>
+                    ))}
+                  </div>
+                </section>
+                
+                {/* Inter-section Divider */}
+                {!isLastActive && (
+                  <div className="hidden xl:block w-px bg-outline-variant/30 xl:mx-4 2xl:mx-6 shrink-0 mt-2 h-[calc(100%-2rem)]"></div>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
