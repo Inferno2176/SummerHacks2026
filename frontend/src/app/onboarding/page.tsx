@@ -58,7 +58,6 @@ export default function OnboardingPage() {
 
   const [skippedSteps, setSkippedSteps] = useState<number[]>([]);
 
-  // Monitoring for "stuck" state
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isSubmitting) {
@@ -94,7 +93,6 @@ export default function OnboardingPage() {
   };
 
   const forceNavigate = () => {
-    console.warn("Triggering Force-Navigate to Dashboard...");
     window.location.assign('/dashboard');
   };
 
@@ -112,7 +110,6 @@ export default function OnboardingPage() {
 
     setIsSubmitting(true);
     
-    // FAIL-SAFE: If everything hangs, navigate after 3 seconds anyway
     const failSafeTimer = setTimeout(() => {
        forceNavigate();
     }, 3000);
@@ -127,7 +124,6 @@ export default function OnboardingPage() {
 
       const userRef = doc(db, "users", user.uid);
       
-      // Use Promise.race to prevent indefinite hanging on setDoc
       await Promise.race([
         setDoc(userRef, finalizedProfile, { merge: true }),
         new Promise((_, reject) => setTimeout(() => reject(new Error("Database Timeout")), 2500))
@@ -135,14 +131,11 @@ export default function OnboardingPage() {
 
       clearTimeout(failSafeTimer);
       router.push('/dashboard');
-      
-      // Hard fallback if route change fails
       setTimeout(() => forceNavigate(), 1000);
 
     } catch (err) {
       console.error("Critical Synchronization Error:", err);
       clearTimeout(failSafeTimer);
-      // In case of error, we still want to try to get them into the dashboard
       forceNavigate();
     }
   };
@@ -177,93 +170,97 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a10] text-gray-100 flex flex-col font-body selection:bg-indigo-500/30">
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-600/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2"></div>
-      </div>
-
-      <div className="w-full h-1 bg-white/5 fixed top-0 z-50">
+    <div className="h-screen w-screen overflow-hidden bg-surface text-on-surface flex flex-col font-body selection:bg-primary/20">
+      
+      <div className="w-full h-1 bg-surface-container-high fixed top-0 z-50">
         <div 
-          className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 shadow-[0_0_15px_rgba(99,102,241,0.5)] transition-all duration-700 ease-out" 
+          className="h-full bg-gradient-to-r from-primary to-primary-container transition-all duration-700 ease-out" 
           style={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
         />
       </div>
 
-      <div className="flex flex-1 pt-16">
-        <main className="flex-1 flex flex-col items-center justify-center p-6 lg:p-12 relative z-10">
-          <div className="max-w-2xl w-full space-y-10 animate-fade-in-up">
-            <header className="space-y-4">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-400 opacity-80">
+      <div className="flex flex-1 h-full w-full max-w-[1600px] mx-auto mt-1">
+        <main className="flex-1 flex flex-col items-center justify-center p-4 lg:p-8 relative z-10 h-full">
+          <div className="w-full max-w-3xl flex flex-col h-[75vh]">
+            <header className="mb-6 shrink-0 text-center animate-fade-in-up">
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary opacity-80">
                 Phase {currentStep + 1} / {STEPS.length}
               </span>
-              <h1 className="text-5xl font-manrope font-black tracking-tighter uppercase leading-none">{STEPS[currentStep]}</h1>
+              <h1 className="text-3xl lg:text-4xl font-manrope font-black tracking-tight uppercase leading-none mt-1 text-on-surface">{STEPS[currentStep]}</h1>
             </header>
 
-            <div className={`bg-[#11111a]/80 backdrop-blur-3xl p-10 lg:p-14 rounded-[3.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] border transition-all duration-500 ${showError ? 'border-red-500 ring-4 ring-red-500/10' : 'border-white/5'}`}>
-              <div className="relative z-10 min-h-[420px] flex flex-col justify-between">
+            <div className={`flex-1 flex flex-col bg-surface-container-lowest border border-outline-variant/20 shadow-xl rounded-xl overflow-hidden transition-all duration-500 animate-fade-in-up ${showError ? 'border-error ring-2 ring-error/20' : ''}`}>
+              
+              <div className="flex-1 overflow-y-auto p-6 md:p-10 hide-scrollbar">
                 {currentStep === 3 ? (
                   <WorkHistoryBuilder entries={workHistory} adding={addingEntry} setAdding={setAddingEntry} temp={tempEntry} setTemp={setTempEntry} onSave={saveWorkEntry} />
                 ) : (
                   renderStepContent(currentStep, formData, setFormData, helpMeWrite, isAILoading, showError)
                 )}
+              </div>
 
-                {!addingEntry && (
-                  <div className="flex flex-col gap-6 pt-12 border-t border-white/5 mt-auto">
-                    {showStuckLink && (
-                       <button onClick={forceNavigate} className="text-[10px] font-black uppercase tracking-widest text-amber-500 animate-pulse hover:text-white transition-colors text-center w-full">
-                         Still Orchestrating? Bypass and Sync in Dashboard
-                       </button>
+              {!addingEntry && (
+                <div className="p-6 md:px-10 bg-surface-container-lowest border-t border-outline-variant/10 shrink-0">
+                  {showStuckLink && (
+                     <button onClick={forceNavigate} className="mb-4 text-[10px] font-black uppercase tracking-widest text-secondary animate-pulse hover:text-primary transition-colors text-center w-full">
+                       Network timeout? Click here to bypass and sync in Dashboard
+                     </button>
+                  )}
+                  
+                  <div className="flex items-center justify-between">
+                    {MANDATORY_STEPS.includes(currentStep) ? (
+                       <span className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest">Mandatory Step</span>
+                    ) : (
+                      <button onClick={() => { setSkippedSteps([...skippedSteps, currentStep]); handleNext(); }} className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant hover:text-primary font-manrope border px-4 py-2 rounded-md hover:bg-surface-container/50 transition-all">Skip Step</button>
                     )}
                     
-                    <div className="flex items-center justify-between">
-                      {MANDATORY_STEPS.includes(currentStep) ? (
-                         <span className="text-[9px] font-black text-gray-700 uppercase tracking-widest">Mandatory Node Stage</span>
-                      ) : (
-                        <button onClick={() => { setSkippedSteps([...skippedSteps, currentStep]); handleNext(); }} className="text-[10px] font-black uppercase tracking-widest text-gray-600 hover:text-indigo-400 font-manrope">Skip Context</button>
-                      )}
-                      
-                      <button 
-                        onClick={handleNext} disabled={isSubmitting}
-                        className="bg-indigo-600 hover:bg-indigo-500 text-white px-14 py-5 rounded-full font-black text-[10px] uppercase tracking-[0.3em] shadow-2xl transition-all active:scale-95 disabled:opacity-80"
-                      >
-                        {isSubmitting ? "Orchestrating..." : (currentStep === STEPS.length - 1 ? "Initialize Portal" : "Continue Synthesis")}
-                      </button>
-                    </div>
+                    <button 
+                      onClick={handleNext} disabled={isSubmitting}
+                      className="ml-auto bg-primary hover:opacity-90 text-on-primary px-8 py-3.5 rounded-md font-black text-[10px] uppercase tracking-widest shadow-md transition-all active:scale-95 disabled:opacity-50"
+                    >
+                      {isSubmitting ? "Saving..." : (currentStep === STEPS.length - 1 ? "Complete Setup" : "Continue")}
+                    </button>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </main>
 
-        <aside className="hidden xl:flex w-[400px] border-l border-white/5 p-14 flex-col justify-between bg-[#08080c]/80 backdrop-blur-2xl">
-           <div className="space-y-14">
-              <div className="space-y-5">
-                 <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-500">Resonance Progress</h3>
-                 <div className="space-y-4">
-                    <div className="flex justify-between text-[11px] font-black uppercase tracking-widest">
-                       <span className="text-gray-400">Synthesis</span>
-                       <span className="text-indigo-400">{progressPercentage}%</span>
+        <aside className="hidden xl:flex w-[320px] border-l border-outline-variant/10 p-8 flex-col justify-between bg-surface-container-lowest shrink-0 shadow-sm relative z-20 overflow-y-auto no-scrollbar">
+           <div className="space-y-12">
+              <div className="space-y-4">
+                 <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant">Profile Synthesis</h3>
+                 <div className="space-y-3">
+                    <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                       <span className="text-on-surface-variant">Progress</span>
+                       <span className="text-primary">{progressPercentage}%</span>
                     </div>
-                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                       <div className="h-full bg-indigo-500 transition-all duration-1000 shadow-[0_0_15px_rgba(99,102,241,0.5)]" style={{ width: `${progressPercentage}%` }} />
+                    <div className="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
+                       <div className="h-full bg-primary transition-all duration-1000 shadow-sm" style={{ width: `${progressPercentage}%` }} />
                     </div>
                  </div>
               </div>
 
-              <div className="space-y-6">
-                 <h4 className="text-[10px] font-black uppercase tracking-widest text-indigo-400/60 font-manrope">Agentic Node Map</h4>
-                 <ul className="space-y-4">
+              <div className="space-y-5">
+                 <h4 className="text-[9px] font-black uppercase tracking-widest text-primary font-manrope">Task Checklist</h4>
+                 <ul className="space-y-3">
                     {STEPS.map((step, i) => (
-                      <li key={i} className="flex items-center gap-4">
-                         <span className={`w-1.5 h-1.5 rounded-full ${isFieldFilled(i) ? 'bg-indigo-500 shadow-[0_0_8px_#6366f1]' : 'bg-white/10'}`}></span>
-                         <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${isFieldFilled(i) ? 'text-gray-200' : 'text-gray-600'}`}>{step}</span>
+                      <li key={i} className="flex items-center gap-3">
+                         <span className={`w-1.5 h-1.5 rounded-sm ${isFieldFilled(i) ? 'bg-primary' : 'bg-outline-variant/30'}`}></span>
+                         <span className={`text-[10px] font-extrabold uppercase tracking-widest transition-colors ${i === currentStep ? 'text-primary' : (isFieldFilled(i) ? 'text-on-surface' : 'text-on-surface-variant')}`}>{step}</span>
                       </li>
                     ))}
                  </ul>
               </div>
            </div>
-           <p className="text-[9px] font-black text-gray-800 uppercase tracking-[0.5em]">Sanctuary Node v3.3</p>
+           <div className="mt-8">
+             <div className="bg-surface-container/50 px-4 py-4 rounded-md border border-outline-variant/10 leading-relaxed text-center">
+               <span className="material-symbols-outlined text-primary mb-1">cloud_done</span>
+               <h5 className="text-[9px] font-black text-on-surface uppercase tracking-[0.3em]">Autosave Active</h5>
+               <p className="text-[9.5px] font-medium text-on-surface-variant mt-1.5">You can safely leave and resume your setup at any time.</p>
+             </div>
+           </div>
         </aside>
       </div>
     </div>
@@ -273,41 +270,44 @@ export default function OnboardingPage() {
 function WorkHistoryBuilder({ entries, adding, setAdding, temp, setTemp, onSave }: any) {
   if (adding) {
     return (
-      <div className="space-y-8 animate-fade-in">
-        <div className="flex justify-between items-center mb-4 text-[10px] font-black uppercase tracking-widest text-indigo-400">
-          <span>Synthesizing {adding}</span>
-          <button onClick={() => setAdding(null)} className="text-gray-600 hover:text-red-400 transition-colors">Abort</button>
+      <div className="space-y-5 animate-fade-in flex flex-col h-full">
+        <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-primary shrink-0">
+          <span>Adding {adding}</span>
+          <button onClick={() => setAdding(null)} className="text-on-surface-variant hover:text-error transition-colors px-3 py-1 bg-surface-container rounded-md border border-outline-variant/10">Cancel</button>
         </div>
-        <div className="grid grid-cols-2 gap-5">
-           <input placeholder="DESIGNATION" className="w-full bg-white/5 px-8 py-5 rounded-2xl border border-white/5 text-gray-200 outline-none text-sm font-bold uppercase" value={temp.role} onChange={(e) => setTemp({...temp, role: e.target.value})} />
-           <input placeholder="ORGANIZATION" className="w-full bg-white/5 px-8 py-5 rounded-2xl border border-white/5 text-gray-200 outline-none text-sm font-bold uppercase" value={temp.organization} onChange={(e) => setTemp({...temp, organization: e.target.value})} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 shrink-0">
+           <input placeholder="DESIGNATION" className="w-full bg-surface px-5 py-4 rounded-md border border-outline-variant/20 text-on-surface outline-none focus:border-primary text-sm font-bold uppercase transition-colors" value={temp.role} onChange={(e) => setTemp({...temp, role: e.target.value})} />
+           <input placeholder="COMPANY" className="w-full bg-surface px-5 py-4 rounded-md border border-outline-variant/20 text-on-surface outline-none focus:border-primary text-sm font-bold uppercase transition-colors" value={temp.organization} onChange={(e) => setTemp({...temp, organization: e.target.value})} />
         </div>
-        <div className="grid grid-cols-2 gap-5">
-           <input type="date" className="w-full bg-white/5 px-8 py-5 rounded-2xl border border-white/10 text-gray-400" value={temp.startDate} onChange={(e) => setTemp({...temp, startDate: e.target.value})} />
-           {!temp.isCurrent && <input type="date" className="w-full bg-white/5 px-8 py-5 rounded-2xl border border-white/10 text-gray-400" value={temp.endDate} onChange={(e) => setTemp({...temp, endDate: e.target.value})} />}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 shrink-0">
+           <input type="date" className="w-full bg-surface px-5 py-4 rounded-md border border-outline-variant/20 text-on-surface-variant outline-none focus:border-primary text-sm font-medium transition-colors" value={temp.startDate} onChange={(e) => setTemp({...temp, startDate: e.target.value})} />
+           {!temp.isCurrent && <input type="date" className="w-full bg-surface px-5 py-4 rounded-md border border-outline-variant/20 text-on-surface-variant outline-none focus:border-primary text-sm font-medium transition-colors" value={temp.endDate} onChange={(e) => setTemp({...temp, endDate: e.target.value})} />}
         </div>
-        <textarea placeholder="Describe impact nodes..." className="w-full h-40 bg-white/5 px-8 py-6 rounded-3xl border border-white/5 text-gray-200 outline-none resize-none font-medium" value={temp.description} onChange={(e) => setTemp({...temp, description: e.target.value})} />
-        <button onClick={onSave} className="w-full py-5 bg-indigo-600 text-white rounded-full font-black text-[11px] uppercase tracking-widest shadow-2xl">Save Synthesis</button>
+        <textarea placeholder="Describe your responsibilities and impact..." className="flex-1 w-full bg-surface px-5 py-4 rounded-md border border-outline-variant/20 text-on-surface outline-none focus:border-primary resize-none font-medium transition-colors mt-2" value={temp.description} onChange={(e) => setTemp({...temp, description: e.target.value})} />
+        <button onClick={onSave} className="w-full py-4 mt-4 shrink-0 bg-primary hover:opacity-90 text-white rounded-md font-black text-[11px] uppercase tracking-widest shadow-sm transition-opacity">Save Entry</button>
       </div>
     );
   }
   return (
-    <div className="space-y-8">
-       <div className="grid grid-cols-2 gap-6">
-          <button onClick={() => setAdding('job')} className="p-8 rounded-[2.5rem] bg-indigo-500/5 border border-indigo-500/20 hover:bg-indigo-500/10 transition-all group flex flex-col items-center">
-             <span className="material-symbols-outlined text-[32px] text-indigo-400 mb-2">work</span>
-             <span className="text-[10px] font-black uppercase tracking-widest text-indigo-400">Add Professional Node</span>
+    <div className="space-y-6">
+       <div className="grid grid-cols-2 gap-4">
+          <button onClick={() => setAdding('job')} className="p-6 rounded-md bg-surface border border-outline-variant/20 hover:border-primary hover:bg-primary/5 transition-all group flex flex-col items-center">
+             <span className="material-symbols-outlined text-[28px] text-primary mb-2">work</span>
+             <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Add Experience</span>
           </button>
-          <button onClick={() => setAdding('internship')} className="p-8 rounded-[2.5rem] bg-purple-500/5 border border-purple-500/20 hover:bg-purple-500/10 transition-all group flex flex-col items-center">
-             <span className="material-symbols-outlined text-[32px] text-purple-400 mb-2">school</span>
-             <span className="text-[10px] font-black uppercase tracking-widest text-purple-400">Add Internship Node</span>
+          <button onClick={() => setAdding('internship')} className="p-6 rounded-md bg-surface border border-outline-variant/20 hover:border-secondary hover:bg-secondary/5 transition-all group flex flex-col items-center">
+             <span className="material-symbols-outlined text-[28px] text-secondary mb-2">school</span>
+             <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Add Internship</span>
           </button>
        </div>
-       <div className="space-y-4">
-          <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-700 pl-4">Active Synthesis Map</h4>
-          {entries.length === 0 ? <div className="p-12 text-center border-2 border-dashed border-white/5 rounded-3xl text-gray-800 italic text-sm">Empty timeline nodes.</div> : entries.map((e: any) => (
-            <div key={e.id} className="p-6 bg-white/5 rounded-3xl border border-white/5 flex justify-between items-center group hover:bg-white/10 transition-all">
-               <div><p className="text-sm font-black text-gray-200 uppercase tracking-tighter">{e.organization}</p><p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">{e.role} • {e.startDate} - {e.isCurrent ? "Present" : e.endDate}</p></div>
+       <div className="space-y-3">
+          <h4 className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant pl-1">Your Timeline</h4>
+          {entries.length === 0 ? <div className="p-8 text-center border-2 border-dashed border-outline-variant/30 rounded-md bg-surface-container-low text-on-surface-variant italic text-sm font-medium">Your work history is empty.</div> : entries.map((e: any) => (
+            <div key={e.id} className="p-5 bg-surface border border-outline-variant/10 rounded-md flex justify-between items-center group hover:bg-surface-container-low transition-all">
+               <div>
+                 <p className="text-sm font-bold text-on-surface uppercase tracking-tight">{e.organization}</p>
+                 <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mt-1">{e.role} • {e.startDate} - {e.isCurrent ? "Present" : e.endDate}</p>
+               </div>
             </div>
           ))}
        </div>
@@ -319,13 +319,14 @@ function renderStepContent(step: number, formData: any, setFormData: any, helpMe
   switch (step) {
     case 0:
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-max">
            {["fullName", "email", "phone", "location"].map((field) => (
-             <div key={field} className="space-y-2">
-                <label className="block text-[9px] font-black uppercase tracking-widest text-gray-600 pl-4">{field.toUpperCase()}{field === 'fullName' || field === 'email' ? ' *' : ''}</label>
+             <div key={field} className="space-y-1.5 pt-1">
+                <label className="block text-[9px] font-black uppercase tracking-widest text-on-surface-variant pl-1">{field === 'fullName' ? 'Full Name' : field}{field === 'fullName' || field === 'email' ? ' *' : ''}</label>
                 <input 
-                  className={`w-full bg-white/5 px-8 py-5 rounded-2xl border transition-all text-sm font-bold text-gray-100 placeholder:text-gray-700 focus:bg-[#1a1a25] outline-none ${showError && (field === 'fullName' || field === 'email') && !formData[field].trim() ? 'border-red-500 ring-4 ring-red-500/10' : 'border-white/5'}`}
+                  className={`w-full bg-surface px-5 py-4 rounded-md border transition-colors text-sm font-bold text-on-surface placeholder:text-outline-variant focus:border-primary outline-none ${showError && (field === 'fullName' || field === 'email') && !formData[field].trim() ? 'border-error bg-error/5 ring-2 ring-error/10' : 'border-outline-variant/20'}`}
                   value={formData[field]} onChange={(e) => setFormData({...formData, [field]: e.target.value})}
+                  placeholder={`Enter your ${field}`}
                 />
              </div>
            ))}
@@ -333,24 +334,29 @@ function renderStepContent(step: number, formData: any, setFormData: any, helpMe
       );
     case 1:
       return (
-        <div className="space-y-6">
-           <div className="flex justify-between items-end">
+        <div className="flex flex-col h-full space-y-4">
+           <div className="flex justify-between items-end shrink-0">
               <button 
                 onClick={helpMeWrite} disabled={isAILoading}
-                className="px-6 py-3 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 rounded-full text-indigo-400 transition-all active:scale-95 flex items-center gap-3 disabled:opacity-50"
+                className="px-5 py-2.5 bg-primary/10 hover:bg-primary/20 border border-primary/20 rounded-md text-primary transition-all active:scale-95 flex items-center gap-2 disabled:opacity-50"
               >
                 <span className={`material-symbols-outlined text-sm ${isAILoading ? 'animate-spin' : ''}`}>auto_fix</span>
-                <span className="text-[10px] font-black uppercase tracking-widest">{isAILoading ? 'Synthesizing...' : '帮我写 (AI Suggest)'}</span>
+                <span className="text-[10px] font-black uppercase tracking-widest">{isAILoading ? 'Generating...' : 'Help me write'}</span>
               </button>
-              <span className={`text-[10px] font-black uppercase tracking-widest ${formData.objective.length >= 256 ? 'text-red-500' : 'text-gray-600'}`}>{formData.objective.length} / 256</span>
+              <span className={`text-[10px] font-black uppercase tracking-widest ${formData.objective.length >= 256 ? 'text-error' : 'text-on-surface-variant'}`}>{formData.objective.length} / 256</span>
            </div>
-           <textarea maxLength={256} className="w-full h-64 bg-white/5 px-8 py-7 rounded-[2rem] border border-white/5 text-gray-200 focus:bg-[#1a1a25] outline-none resize-none font-medium leading-relaxed" value={formData.objective} onChange={(e) => setFormData({...formData, objective: e.target.value})} placeholder="Define your professional sanctuary objective..." />
+           <textarea maxLength={256} className="flex-1 w-full bg-surface px-6 py-6 rounded-md border border-outline-variant/20 text-on-surface focus:border-primary outline-none resize-none font-medium leading-relaxed transition-colors mt-2" value={formData.objective} onChange={(e) => setFormData({...formData, objective: e.target.value})} placeholder="Write a short summary about your professional goals, background, and what you're looking for..." />
         </div>
       );
     default:
       const fields = ["fullName", "objective", "education", "experience", "training", "skills", "extra", "portfolio", "accomplishments"];
       return (
-        <textarea className="w-full h-80 bg-white/5 px-8 py-7 rounded-[2.5rem] border border-white/5 text-gray-100 focus:bg-[#1a1a25] outline-none resize-none font-medium leading-relaxed" value={formData[fields[step]]} onChange={(e) => setFormData({...formData, [fields[step]]: e.target.value})} placeholder={`Input your ${STEPS[step]} nodes...`} />
+        <div className="flex flex-col h-full">
+           <div className="mb-3 shrink-0">
+               <label className="block text-[9px] font-black uppercase tracking-widest text-on-surface-variant pl-1">{STEPS[step]}</label>
+           </div>
+           <textarea className="flex-1 w-full bg-surface px-6 py-6 rounded-md border border-outline-variant/20 text-on-surface focus:border-primary outline-none resize-none font-medium leading-relaxed transition-colors" value={formData[fields[step]]} onChange={(e) => setFormData({...formData, [fields[step]]: e.target.value})} placeholder={`Add your ${STEPS[step]} details here...`} />
+        </div>
       );
   }
 }

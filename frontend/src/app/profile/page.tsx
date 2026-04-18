@@ -38,8 +38,6 @@ export default function ProfilePage() {
   
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [newSkill, setNewSkill] = useState('');
-  const [isEditingSkill, setIsEditingSkill] = useState(false);
 
   useEffect(() => {
     if (authLoading) return;
@@ -101,7 +99,7 @@ export default function ProfilePage() {
         workHistory: profileData.workHistory
       }, { merge: true });
       
-      alert("Profile nodes updated in the sanctuary.");
+      alert("Profile updated successfully.");
     } catch (err) {
       console.error(err);
       alert("Error saving profile.");
@@ -110,34 +108,31 @@ export default function ProfilePage() {
   };
 
   if (authLoading || loading) {
-     return <div className="flex-1 bg-[#0a0a0f] min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div></div>;
+     return <div className="flex-1 bg-surface-container-lowest min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>;
   }
 
-  if (!user) return <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center text-gray-500 uppercase tracking-widest font-black text-xs">Access Restricted</div>;
+  if (!user) return <div className="min-h-screen bg-surface-container flex items-center justify-center text-on-surface-variant font-bold text-sm">Access Restricted</div>;
 
   return (
-    <div className="flex-1 bg-[#0a0a0f] min-h-screen pb-20 text-gray-100 font-body">
+    <div className="flex-1 bg-surface min-h-screen pb-20 text-on-surface font-body overflow-x-hidden">
       
-      {/* Dynamic Header */}
-      <div className="h-64 bg-gradient-to-br from-indigo-600/20 via-purple-600/5 to-transparent relative flex items-end px-12 pb-12 border-b border-white/5">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent"></div>
-        <div className="flex items-center gap-8 relative z-10 animate-fade-in">
-           <div className="w-24 h-24 rounded-full bg-surface-container-high border-4 border-[#0a0a0f] shadow-2xl overflow-hidden">
-              <img src={user.photoURL || `https://ui-avatars.com/api/?name=${profileData.firstName}+${profileData.lastName}&background=4f46e5&color=fff`} className="w-full h-full object-cover" />
-           </div>
-           <div className="space-y-1">
-              <h1 className="text-4xl font-manrope font-black tracking-tighter uppercase">{profileData.firstName} {profileData.lastName}</h1>
-              <p className="text-xs font-black uppercase tracking-[0.3em] text-indigo-400 opacity-80">{profileData.headline || "Architect choice"}</p>
-           </div>
-        </div>
+      {/* Sleek Light Mode Header - Compact layout */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-8 pb-6 flex flex-col md:flex-row items-center md:items-start gap-6">
+         <div className="w-24 h-24 shrink-0 rounded-full bg-surface-container-high border-4 border-surface shadow-md overflow-hidden relative">
+            <img src={user.photoURL || `https://ui-avatars.com/api/?name=${profileData.firstName}+${profileData.lastName}&background=e2e8f0&color=475569`} className="w-full h-full object-cover" />
+         </div>
+         <div className="space-y-1 text-center md:text-left mt-2">
+            <h1 className="text-3xl font-manrope font-black tracking-tight text-on-surface">{profileData.firstName} {profileData.lastName}</h1>
+            <p className="text-sm font-bold text-on-surface-variant">{profileData.headline || "Add a professional headline"}</p>
+         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-12 -mt-8 relative z-20">
-        <div className="flex flex-col lg:flex-row gap-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="flex flex-col lg:flex-row gap-8">
           
           {/* Sidebar Menu */}
-          <div className="w-full lg:w-80 flex flex-col gap-8">
-            <div className="bg-[#11111a] rounded-md p-4 border border-white/5 shadow-2xl">
+          <div className="w-full lg:w-72 flex flex-col gap-6 shrink-0">
+            <div className="bg-surface-container-lowest rounded-md p-3 border border-outline-variant/20 shadow-sm">
               {[
                 { id: 'general', label: 'Identity', icon: 'fingerprint' },
                 { id: 'experience', label: 'Timeline', icon: 'timeline' },
@@ -147,50 +142,50 @@ export default function ProfilePage() {
                 <button 
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-4 px-6 py-4 rounded-md w-full text-left transition-all duration-300 ${activeTab === tab.id ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-gray-500 hover:bg-white/5 hover:text-gray-300'}`}
+                  className={`flex items-center gap-3 px-5 py-3.5 rounded-md w-full text-left transition-all duration-200 ${activeTab === tab.id ? 'bg-primary/10 text-primary font-bold' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium'}`}
                 >
-                  <span className="material-symbols-outlined text-[20px]">{tab.icon}</span>
-                  <span className="text-[10px] font-black uppercase tracking-widest">{tab.label}</span>
+                  <span className={`material-symbols-outlined text-[20px] ${activeTab === tab.id ? 'text-primary' : ''}`}>{tab.icon}</span>
+                  <span className="text-[11px] uppercase tracking-widest">{tab.label}</span>
                 </button>
               ))}
             </div>
 
-            <div className="p-8 bg-indigo-600/5 rounded-md border border-indigo-600/10 space-y-4">
-               <h4 className="text-[9px] font-black uppercase tracking-widest text-indigo-400">Security Checkpoint</h4>
-               <p className="text-[10px] font-bold text-gray-500 leading-relaxed uppercase tracking-wider">Your sanctuary nodes are encrypted and synchronized across the agentic network.</p>
+            <div className="p-6 bg-surface-container rounded-md border border-outline-variant/10">
+               <h4 className="text-[10px] font-black uppercase tracking-widest text-on-surface">Data Privacy</h4>
+               <p className="text-[11px] font-medium text-on-surface-variant mt-2 leading-relaxed">Your data securely synchronizes with the LandMyJob agentic network to power automated applications.</p>
             </div>
           </div>
 
           {/* Main Content Area */}
           <div className="flex-1">
             {activeTab === 'general' && (
-              <div className="bg-[#11111a] rounded-md p-12 border border-white/5 shadow-2xl space-y-10 animate-fade-in">
-                <div className="flex justify-between items-center">
-                   <h2 className="text-2xl font-manrope font-black tracking-tight uppercase">General Identity</h2>
-                   <button onClick={handleSave} disabled={saving} className="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-full font-black text-[10px] uppercase tracking-widest shadow-xl transition-all disabled:opacity-50">{saving ? 'Syncing...' : 'Update Sanctuary'}</button>
+              <div className="bg-surface-container-lowest rounded-md p-8 lg:p-10 border border-outline-variant/20 shadow-sm space-y-8 animate-fade-in">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                   <h2 className="text-xl font-manrope font-black tracking-tight text-on-surface">General Information</h2>
+                   <button onClick={handleSave} disabled={saving} className="bg-primary hover:opacity-90 text-on-primary px-6 py-2.5 rounded-md font-black text-[10px] uppercase tracking-widest shadow-sm transition-opacity disabled:opacity-50">{saving ? 'Saving...' : 'Save Profile'}</button>
                 </div>
 
-                <div className="space-y-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {["firstName", "lastName", "phone", "location"].map(field => (
-                      <div key={field} className="space-y-2">
-                        <label className="text-[9px] font-black uppercase tracking-widest text-gray-600 pl-4">{field}</label>
+                      <div key={field} className="space-y-1.5">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant pl-1">{field}</label>
                         <input 
                           type="text" 
                           value={(profileData as any)[field]} 
                           onChange={e => setProfileData({...profileData, [field]: e.target.value})}
-                          className="w-full bg-white/5 border border-white/5 rounded-md px-6 py-4 text-sm font-semibold text-gray-200 focus:ring-4 focus:ring-indigo-500/20 outline-none transition-all" 
+                          className="w-full bg-surface border border-outline-variant/20 rounded-md px-5 py-3 text-sm font-semibold text-on-surface focus:border-primary outline-none transition-colors" 
                         />
                       </div>
                     ))}
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-gray-600 pl-4">Professional Objective</label>
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant pl-1">Professional Objective</label>
                     <textarea 
                       value={profileData.objective}
                       onChange={e => setProfileData({...profileData, objective: e.target.value})}
-                      className="w-full h-40 bg-white/5 border border-white/5 rounded-[2rem] px-8 py-6 text-sm font-semibold text-gray-200 focus:ring-4 focus:ring-indigo-500/20 outline-none transition-all resize-none leading-relaxed" 
+                      className="w-full h-32 bg-surface border border-outline-variant/20 rounded-md px-5 py-4 text-sm font-medium text-on-surface focus:border-primary outline-none transition-colors resize-none leading-relaxed" 
                     />
                   </div>
                 </div>
@@ -199,34 +194,34 @@ export default function ProfilePage() {
 
             {activeTab === 'experience' && (
               <div className="space-y-6 animate-fade-in">
-                <div className="flex justify-between items-center px-4">
-                   <h2 className="text-2xl font-manrope font-black tracking-tight uppercase">Career Timeline</h2>
-                    <button onClick={handleSave} className="bg-white/5 hover:bg-white/10 text-gray-400 px-6 py-2.5 rounded-full font-black text-[9px] uppercase tracking-widest transition-all">Persist History</button>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-2">
+                   <h2 className="text-xl font-manrope font-black tracking-tight text-on-surface">Career Timeline</h2>
+                   <button onClick={handleSave} className="bg-surface-container hover:bg-outline-variant/20 text-on-surface-variant border border-outline-variant/20 px-6 py-2.5 rounded-md font-black text-[10px] uppercase tracking-widest transition-colors mb-2">Save History</button>
                 </div>
                 
                 <div className="space-y-4">
                   {profileData.workHistory.length === 0 ? (
-                    <div className="bg-[#11111a] rounded-md p-20 text-center border border-white/5 italic text-gray-700">No nodes added to timeline yet.</div>
+                    <div className="bg-surface-container-lowest rounded-md p-16 text-center border-2 border-dashed border-outline-variant/20 text-on-surface-variant font-medium text-sm">No work experience added yet. Add it via the Onboarding flow.</div>
                   ) : (
                     profileData.workHistory.map((exp) => (
-                      <div key={exp.id} className="bg-[#11111a] rounded-md p-10 border border-white/5 group hover:border-indigo-500/30 transition-all duration-500 flex flex-col md:flex-row justify-between gap-6">
-                         <div className="flex-1 space-y-4">
-                            <div className="flex items-center gap-4">
-                               <div className={`w-12 h-12 rounded-md flex items-center justify-center ${exp.type === 'job' ? 'bg-indigo-600/10 text-indigo-400' : 'bg-purple-600/10 text-purple-400'}`}>
-                                  <span className="material-symbols-outlined">{exp.type === 'job' ? 'work' : 'school'}</span>
+                      <div key={exp.id} className="bg-surface-container-lowest rounded-md p-6 border border-outline-variant/20 hover:border-primary/30 transition-all flex flex-col md:flex-row justify-between gap-6 shadow-sm">
+                         <div className="flex-1 space-y-3">
+                            <div className="flex items-start gap-4">
+                               <div className={`w-10 h-10 mt-1 rounded-md flex shrink-0 items-center justify-center ${exp.type === 'job' ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary'}`}>
+                                  <span className="material-symbols-outlined text-[20px]">{exp.type === 'job' ? 'work' : 'school'}</span>
                                </div>
                                <div>
-                                  <h3 className="text-lg font-bold text-gray-100">{exp.role}</h3>
-                                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400/60">{exp.organization}</p>
+                                  <h3 className="text-base font-bold text-on-surface">{exp.organization}</h3>
+                                  <p className="text-[11px] font-black uppercase tracking-widest text-on-surface-variant mt-0.5">{exp.role}</p>
                                </div>
                             </div>
-                            <p className="text-sm text-gray-500 leading-relaxed font-medium">{exp.description}</p>
+                            <p className="text-sm text-on-surface-variant leading-relaxed font-medium pl-14">{exp.description}</p>
                          </div>
-                         <div className="text-right flex flex-col justify-center items-end gap-2">
-                             <div className="bg-white/5 px-4 py-2 rounded-md text-[10px] font-black uppercase tracking-widest text-gray-400 border border-white/5">
+                         <div className="flex flex-col items-start md:items-end gap-2 md:pl-0 pl-14">
+                             <div className="bg-surface px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider text-on-surface-variant border border-outline-variant/10">
                                {exp.startDate} — {exp.isCurrent ? "Present" : exp.endDate}
                              </div>
-                             {exp.isRemote && <span className="text-[8px] font-black uppercase tracking-widest text-indigo-400 px-2 py-0.5 bg-indigo-400/10 rounded-full">Remote / WFH</span>}
+                             {exp.isRemote && <span className="text-[9px] font-bold uppercase tracking-widest text-secondary bg-secondary/10 px-2 py-0.5 rounded-md">Remote</span>}
                          </div>
                       </div>
                     ))
@@ -236,23 +231,28 @@ export default function ProfilePage() {
             )}
 
             {activeTab === 'skills' && (
-              <div className="bg-[#11111a] rounded-md p-12 border border-white/5 shadow-2xl space-y-10 animate-fade-in">
-                 <h2 className="text-2xl font-manrope font-black tracking-tight uppercase">Skill Matrix</h2>
-                 <div className="flex flex-wrap gap-4">
+              <div className="bg-surface-container-lowest rounded-md p-8 lg:p-10 border border-outline-variant/20 shadow-sm space-y-8 animate-fade-in">
+                 <div className="flex justify-between items-center">
+                    <h2 className="text-xl font-manrope font-black tracking-tight text-on-surface">Skill Matrix</h2>
+                    <button onClick={handleSave} disabled={saving} className="bg-primary hover:opacity-90 text-on-primary px-6 py-2.5 rounded-md font-black text-[10px] uppercase tracking-widest shadow-sm transition-opacity disabled:opacity-50">{saving ? 'Saving...' : 'Save Matrix'}</button>
+                 </div>
+                 <div className="flex flex-wrap gap-2">
                     {profileData.skills.map((skill, i) => (
-                      <div key={i} className="px-6 py-3 bg-white/5 border border-white/5 rounded-md text-[10px] font-black uppercase tracking-widest text-gray-300 hover:bg-indigo-600 hover:text-white transition-all duration-300 cursor-default">
+                      <div key={i} className="px-4 py-2 bg-surface border border-outline-variant/20 rounded-md text-[11px] font-bold uppercase tracking-widest text-on-surface shadow-sm cursor-default">
                         {skill}
                       </div>
                     ))}
+                    {profileData.skills.length === 0 && <span className="text-sm text-on-surface-variant italic">No skills added yet.</span>}
                  </div>
               </div>
             )}
             
             {activeTab === 'resume' && (
-              <div className="bg-[#11111a] rounded-md p-12 border border-white/5 shadow-2xl space-y-10 animate-fade-in text-center py-32">
-                 <span className="material-symbols-outlined text-6xl text-gray-800 mb-4 scale-150">inventory_2</span>
-                 <h2 className="text-2xl font-manrope font-black tracking-tight uppercase">Document Vault</h2>
-                 <p className="text-xs font-bold text-gray-600 uppercase tracking-widest max-w-sm mx-auto">Your generated professional assets and original CV nodes are stored in the sanctuary's secure vault.</p>
+              <div className="bg-surface-container-lowest rounded-md p-12 border border-outline-variant/20 shadow-sm space-y-6 animate-fade-in text-center flex flex-col items-center justify-center min-h-[300px]">
+                 <span className="material-symbols-outlined text-[48px] text-primary/40 mb-2">snippet_folder</span>
+                 <h2 className="text-xl font-manrope font-black tracking-tight text-on-surface">Document Vault</h2>
+                 <p className="text-xs font-medium text-on-surface-variant max-w-sm mx-auto leading-relaxed">Your generated cover letters and parsed CV components are safely stored in your repository.</p>
+                 <button className="mt-4 bg-surface border border-outline-variant/20 hover:bg-surface-container text-on-surface px-6 py-2.5 rounded-md text-[10px] font-black uppercase tracking-widest transition-colors shadow-sm">View Vault Documents</button>
               </div>
             )}
 
