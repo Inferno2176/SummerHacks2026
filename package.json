@@ -1,0 +1,21 @@
+{
+  "name": "landajob",
+  "version": "1.0.0",
+  "description": "Root workspace for LandAJob",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w frontend\" \"npm run start -w backend\"",
+    "frontend:dev": "npm run dev -w frontend",
+    "backend:dev": "npm run start -w backend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

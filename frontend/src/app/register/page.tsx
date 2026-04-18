@@ -23,7 +23,7 @@ export default function RegisterPage() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       await updateProfile(userCredential.user, { displayName: formData.fullName });
-      router.push('/login');
+      router.push('/onboarding');
     } catch (err: any) {
       setError(err.message || 'Failed to create account');
     } finally {
