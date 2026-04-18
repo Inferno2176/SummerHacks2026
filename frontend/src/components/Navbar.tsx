@@ -7,10 +7,10 @@ export default function Navbar() {
       <div className="flex items-center gap-12">
         <h1 className="text-2xl font-bold text-primary font-manrope">LandMyJob.</h1>
         <div className="flex items-center gap-2">
-          <Link href="/" className="font-medium text-outline-variant hover:text-on-surface hover:bg-primary/5 px-4 py-2 rounded-[0.5rem] transition-all">Dashboard</Link>
-          <Link href="/jobs" className="font-medium text-outline-variant hover:text-on-surface hover:bg-primary/5 px-4 py-2 rounded-[0.5rem] transition-all">Job Matches</Link>
-          <Link href="/tracker" className="font-medium text-primary bg-primary/10 px-4 py-2 rounded-[0.5rem] transition-all">App Tracker</Link>
-          <Link href="/studio" className="font-medium text-outline-variant hover:text-on-surface hover:bg-primary/5 px-4 py-2 rounded-[0.5rem] transition-all">Review Studio</Link>
+          <Link href="/" className="font-medium text-outline-variant hover:text-on-surface hover:bg-primary/5 px-4 py-2 rounded-md transition-all">Dashboard</Link>
+          <Link href="/jobs" className="font-medium text-outline-variant hover:text-on-surface hover:bg-primary/5 px-4 py-2 rounded-md transition-all">Job Matches</Link>
+          <Link href="/tracker" className="font-medium text-primary bg-primary/10 px-4 py-2 rounded-md transition-all">App Tracker</Link>
+          <Link href="/studio" className="font-medium text-outline-variant hover:text-on-surface hover:bg-primary/5 px-4 py-2 rounded-md transition-all">Review Studio</Link>
         </div>
       </div>
       <div className="flex items-center gap-4">

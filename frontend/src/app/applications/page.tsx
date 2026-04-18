@@ -72,7 +72,7 @@ export default function ApplicationsPage() {
                    <span className={`material-symbols-outlined ${item.iconColor} text-[14px]`} style={{ fontVariationSettings: "'FILL' 1" }}>{item.icon}</span>
                 </div>
                 <p className="text-[9px] uppercase tracking-widest font-bold text-on-surface-variant/60 mb-0.5">{item.time}</p>
-                <div className="bg-surface-container-low/30 rounded-xl p-3 group-hover:bg-surface-container/50 transition-colors">
+                <div className="bg-surface-container-low/30 rounded-md p-3 group-hover:bg-surface-container/50 transition-colors">
                   <h4 className="font-manrope font-bold text-on-surface text-xs mb-0.5">{item.title}</h4>
                   <p className="text-[11px] text-on-surface-variant font-medium leading-snug">{item.desc}</p>
                   {item.action && (
@@ -110,12 +110,12 @@ export default function ApplicationsPage() {
           <div className="flex flex-col sm:flex-row gap-3 items-center bg-surface-container-low p-1.5 rounded-full border border-outline-variant/10 shadow-sm w-full 2xl:w-auto">
             <div className="flex-1 relative w-full min-w-48">
               <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
-              <input className="w-full bg-surface-container-lowest rounded-full py-2 pl-9 pr-3 border-none focus:ring-2 focus:ring-primary text-xs font-body shadow-sm placeholder-on-surface-variant/50" placeholder="Search roles, companies..." type="text"/>
+              <input className="w-full bg-surface-container-lowest rounded-md py-2 pl-9 pr-3 border-none focus:ring-2 focus:ring-primary text-xs font-body shadow-sm placeholder-on-surface-variant/50" placeholder="Search roles, companies..." type="text"/>
             </div>
             <div className="flex gap-1.5 pr-1.5 overflow-x-auto w-full sm:w-auto custom-scrollbar pb-1 sm:pb-0">
-              <button className="bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-semibold font-body whitespace-nowrap shadow-sm">All (12)</button>
-              <button className="bg-surface-container-lowest text-on-surface hover:bg-surface-container px-4 py-2 rounded-full text-xs font-medium font-body whitespace-nowrap transition-colors border border-outline-variant/15">Interviewing (3)</button>
-              <button className="bg-surface-container-lowest text-on-surface hover:bg-surface-container px-4 py-2 rounded-full text-xs font-medium font-body whitespace-nowrap transition-colors border border-outline-variant/15">Applied (8)</button>
+              <button className="bg-primary text-on-primary px-4 py-2 rounded-md text-xs font-semibold font-body whitespace-nowrap shadow-sm">All (12)</button>
+              <button className="bg-surface-container-lowest text-on-surface hover:bg-surface-container px-4 py-2 rounded-md text-xs font-medium font-body whitespace-nowrap transition-colors border border-outline-variant/15">Interviewing (3)</button>
+              <button className="bg-surface-container-lowest text-on-surface hover:bg-surface-container px-4 py-2 rounded-md text-xs font-medium font-body whitespace-nowrap transition-colors border border-outline-variant/15">Applied (8)</button>
             </div>
           </div>
         </header>
@@ -143,13 +143,13 @@ export default function ApplicationsPage() {
                   {/* Vertical scroll container */}
                   <div className="flex flex-col overflow-y-auto overflow-x-hidden gap-4 pb-4 w-full h-full custom-scrollbar pr-2">
                     {sectionApps.map((app) => (
-                      <article key={app.id} className={`w-full shrink-0 h-[175px] ${app.status === 'Interview' ? 'bg-secondary text-on-secondary shadow-md ring-2 ring-secondary/10' : 'bg-surface-container-lowest'} rounded-2xl p-4 ambient-shadow flex flex-col relative overflow-hidden group border border-outline-variant/10 hover:-translate-y-0.5 transition-transform`}>
+                      <article key={app.id} className={`w-full shrink-0 h-[175px] ${app.status === 'Interview' ? 'bg-secondary text-on-secondary shadow-md ring-2 ring-secondary/10' : 'bg-surface-container-lowest'} rounded-md p-4 ambient-shadow flex flex-col relative overflow-hidden group border border-outline-variant/10 hover:-translate-y-0.5 transition-transform`}>
                         {/* Decorative Accent for Featured */}
                         {app.status === 'Interview' && <div className="absolute -top-10 -right-10 w-20 h-20 bg-white/10 rounded-full blur-xl pointer-events-none"></div>}
 
                         <div className="flex justify-between items-start">
                           <div className="flex items-center gap-3">
-                            <div className={`w-10 h-10 rounded-xl ${app.status === 'Interview' ? 'bg-white' : 'bg-surface-container'} flex items-center justify-center overflow-hidden border border-outline-variant/10 p-1.5 shrink-0`}>
+                            <div className={`w-10 h-10 rounded-md ${app.status === 'Interview' ? 'bg-white' : 'bg-surface-container'} flex items-center justify-center overflow-hidden border border-outline-variant/10 p-1.5 shrink-0`}>
                               <img src={app.logo} alt={app.company} className="w-full h-full object-contain" />
                             </div>
                             <div className="min-w-0">
@@ -166,7 +166,7 @@ export default function ApplicationsPage() {
                         </div>
 
                         {app.nextStep && (
-                          <div className={`${app.status === 'Interview' ? 'bg-white/10' : 'bg-surface-container-low'} rounded-xl p-3 mt-auto`}>
+                          <div className={`${app.status === 'Interview' ? 'bg-white/10' : 'bg-surface-container-low'} rounded-md p-3 mt-auto`}>
                             <p className={`text-[11px] font-black uppercase tracking-widest mb-1.5 flex items-center justify-between ${app.status === 'Interview' ? 'text-white/60' : 'text-on-surface/60'}`}>
                               {app.status === 'Interview' ? 'Next Step' : 'Timeline'}
                               {app.progress !== undefined && <span>{app.progress}%</span>}
@@ -188,8 +188,8 @@ export default function ApplicationsPage() {
                         
                         {!app.nextStep && (
                           <div className="mt-auto flex gap-2">
-                            <button className="flex-1 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg py-2.5 text-[11px] font-black font-body transition-colors uppercase tracking-widest truncate">Draft Cover</button>
-                            <button className="bg-primary hover:bg-primary-dim text-on-primary rounded-lg px-5 py-2.5 text-[11px] font-black font-body transition-colors shadow-sm shadow-primary/20 uppercase tracking-widest shrink-0">Apply</button>
+                            <button className="flex-1 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-md py-2.5 text-[11px] font-black font-body transition-colors uppercase tracking-widest truncate">Draft Cover</button>
+                            <button className="bg-primary hover:bg-primary-dim text-on-primary rounded-md px-5 py-2.5 text-[11px] font-black font-body transition-colors shadow-sm shadow-primary/20 uppercase tracking-widest shrink-0">Apply</button>
                           </div>
                         )}
                       </article>

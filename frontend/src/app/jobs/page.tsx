@@ -139,18 +139,18 @@ export default function JobFeed() {
             </div>
             <div className="flex items-center gap-4 shrink-0">
                {userProfile && Object.keys(userProfile).length > 0 && (
-                 <div className="flex items-center gap-2 bg-primary/5 text-primary px-4 py-2 rounded-xl text-xs font-bold border border-primary/10">
+                 <div className="flex items-center gap-2 bg-primary/5 text-primary px-4 py-2 rounded-md text-xs font-bold border border-primary/10">
                    <span className="material-symbols-outlined text-[16px]">tune</span>
                    Profile Matches Active
                  </div>
                )}
-               <button className="px-5 py-2.5 rounded-xl bg-surface-container-high text-on-surface text-[10px] font-black uppercase tracking-widest hover:bg-surface-container-highest transition-colors">Sort by Relevance</button>
+               <button className="px-5 py-2.5 rounded-md bg-surface-container-high text-on-surface text-[10px] font-black uppercase tracking-widest hover:bg-surface-container-highest transition-colors">Sort by Relevance</button>
             </div>
           </header>
 
           {/* Missing Profile Warning */}
-          {user && (!userProfile || Object.keys(userProfile).length === 0) && (
-            <div className="bg-tertiary/10 border border-tertiary/20 rounded-2xl p-6 flex flex-col sm:flex-row gap-4 items-center justify-between mb-2">
+          {!loading && user && (!userProfile || Object.keys(userProfile).length === 0) && (
+            <div className="bg-tertiary/10 border border-tertiary/20 rounded-md p-6 flex flex-col sm:flex-row gap-4 items-center justify-between mb-2">
               <div className="flex items-center gap-4 text-tertiary">
                 <span className="material-symbols-outlined text-3xl">account_circle_off</span>
                 <div>
@@ -158,30 +158,24 @@ export default function JobFeed() {
                   <p className="text-xs opacity-80 mt-1">Lumina AI requires your skillset, location, and salary expectations to curate jobs perfectly for you.</p>
                 </div>
               </div>
-              <Link href="/profile" className="shrink-0 bg-tertiary text-white px-5 py-2.5 rounded-xl uppercase tracking-widest text-[10px] font-black hover:opacity-90">
+              <Link href="/profile" className="shrink-0 bg-tertiary text-white px-5 py-2.5 rounded-md uppercase tracking-widest text-[10px] font-black hover:opacity-90">
                  Complete Profile
               </Link>
             </div>
           )}
 
           {/* Job Grid / Match Results */}
-          {loading ? (
-            <div className="py-24 flex flex-col items-center justify-center text-center">
-              <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-6"></div>
-              <p className="text-sm font-bold text-on-surface-variant animate-pulse">Lumina AI is finding your matches...</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
-              {filteredJobs.length === 0 ? (
-              <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-surface-container-lowest rounded-3xl border border-dashed border-outline-variant/30">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
+            {filteredJobs.length === 0 ? (
+              <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-surface-container-lowest rounded-md border border-dashed border-outline-variant/30">
                 <span className="material-symbols-outlined text-5xl text-outline-variant mb-4">search_off</span>
                 <h3 className="text-lg font-black text-on-surface mb-1">No perfect matches right now</h3>
                 <p className="text-sm font-bold text-on-surface-variant max-w-md mx-auto">We couldn't find active roles that perfectly align with your exact skillet and mode of work. Try broadening your preferences!</p>
-                <Link href="/profile" className="mt-6 bg-primary text-white text-xs font-black px-6 py-3 rounded-xl uppercase tracking-widest hover:opacity-90">Update Preferences</Link>
+                <Link href="/profile" className="mt-6 bg-primary text-white text-xs font-black px-6 py-3 rounded-md uppercase tracking-widest hover:opacity-90">Update Preferences</Link>
               </div>
             ) : (
               filteredJobs.map((job) => (
-                <div key={job.id} className={`${job.theme} rounded-3xl p-6 flex flex-col gap-6 relative group hover:-translate-y-1 transition-all duration-300 ambient-shadow border border-outline-variant/10 overflow-hidden`}>
+                <div key={job.id} className={`${job.theme} rounded-md p-6 flex flex-col gap-6 relative group hover:-translate-y-1 transition-all duration-300 ambient-shadow border border-outline-variant/10 overflow-hidden`}>
                   
                   {/* Dismiss Button */}
                   <button 
@@ -196,14 +190,14 @@ export default function JobFeed() {
                   {job.isFeatured && <div className="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>}
 
                   {/* AI Tag */}
-                  <div className={`absolute top-6 right-6 ${job.isFeatured ? 'bg-white/20 text-white' : 'bg-surface-container-lowest/90 text-on-surface'} backdrop-blur-sm rounded-lg px-2.5 py-1 flex items-center gap-1.5 shadow-sm border border-outline-variant/10 z-10`}>
+                  <div className={`absolute top-6 right-6 ${job.isFeatured ? 'bg-white/20 text-white' : 'bg-surface-container-lowest/90 text-on-surface'} backdrop-blur-sm rounded-md px-2.5 py-1 flex items-center gap-1.5 shadow-sm border border-outline-variant/10 z-10`}>
                     <span className={`material-symbols-outlined text-[14px] ${job.isFeatured ? 'text-white' : job.iconColor}`} style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
                     <span className="font-body text-[10px] font-black uppercase tracking-tighter">{job.match} Match</span>
                   </div>
 
                   {/* Header */}
                   <div className="flex items-start gap-4 pr-24">
-                    <div className={`w-12 h-12 rounded-xl shrink-0 ${job.isFeatured ? 'bg-white' : 'bg-surface-container-lowest'} flex items-center justify-center shadow-sm overflow-hidden p-2 border border-outline-variant/10 group-hover:scale-105 transition-transform`}>
+                    <div className={`w-12 h-12 rounded-md shrink-0 ${job.isFeatured ? 'bg-white' : 'bg-surface-container-lowest'} flex items-center justify-center shadow-sm overflow-hidden p-2 border border-outline-variant/10 group-hover:scale-105 transition-transform`}>
                       <img src={job.logo} alt={job.company} className="w-full h-full object-contain" />
                     </div>
                     <div>
@@ -239,10 +233,10 @@ export default function JobFeed() {
                   {/* Actions */}
                   <div className="mt-auto pt-2 flex items-center justify-between gap-3">
                     <div className="flex gap-2 w-full">
-                       <button className={`flex-1 ${job.isFeatured ? 'bg-white text-primary' : 'bg-primary text-white shadow-primary/20'} font-body text-[10px] font-black py-2.5 rounded-xl shadow-lg hover:opacity-90 transition-all active:scale-[0.95] uppercase tracking-widest`}>
+                       <button className={`flex-1 ${job.isFeatured ? 'bg-white text-primary' : 'bg-primary text-white shadow-primary/20'} font-body text-[10px] font-black py-2.5 rounded-md shadow-lg hover:opacity-90 transition-all active:scale-[0.95] uppercase tracking-widest`}>
                         Apply
                       </button>
-                      <button className={`flex-1 ${job.isFeatured ? 'bg-white/20 text-white border-white/20' : 'bg-surface-container-lowest text-primary border-primary/20'} border font-body text-[10px] font-black py-2.5 rounded-xl hover:bg-primary/5 transition-all uppercase tracking-widest`}>
+                      <button className={`flex-1 ${job.isFeatured ? 'bg-white/20 text-white border-white/20' : 'bg-surface-container-lowest text-primary border-primary/20'} border font-body text-[10px] font-black py-2.5 rounded-md hover:bg-primary/5 transition-all uppercase tracking-widest`}>
                         Auto Apply
                       </button>
                     </div>
@@ -251,7 +245,6 @@ export default function JobFeed() {
               ))
             )}
             </div>
-          )}
         </div>
       </div>
     </div>

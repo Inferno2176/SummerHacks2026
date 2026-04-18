@@ -77,7 +77,7 @@ export default function RegisterPage() {
             <p className="font-body text-on-surface-variant text-sm">Join thousands building their personal sanctuary.</p>
           </div>
           
-          {error && <div className="mb-4 p-3 bg-error/10 text-error text-xs rounded-lg border border-error/20">{error}</div>}
+          {error && <div className="mb-4 p-3 bg-error/10 text-error text-xs rounded-md border border-error/20">{error}</div>}
           
           <form className="space-y-6" onSubmit={handleRegister}>
             {/* Full Name */}
@@ -89,7 +89,7 @@ export default function RegisterPage() {
                 </div>
                 <input 
                   required
-                  className="w-full pl-11 pr-4 py-2.5 bg-surface border border-outline-variant/30 rounded-[1rem] focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-300 font-body text-sm text-on-surface placeholder:text-outline" 
+                  className="w-full pl-11 pr-4 py-2.5 bg-surface border border-outline-variant/30 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-300 font-body text-sm text-on-surface placeholder:text-outline" 
                   id="fullName" 
                   placeholder="Jane Doe" 
                   type="text"
@@ -108,7 +108,7 @@ export default function RegisterPage() {
                 </div>
                 <input 
                   required
-                  className="w-full pl-11 pr-4 py-2.5 bg-surface border border-outline-variant/30 rounded-[1rem] focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-300 font-body text-sm text-on-surface placeholder:text-outline" 
+                  className="w-full pl-11 pr-4 py-2.5 bg-surface border border-outline-variant/30 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-300 font-body text-sm text-on-surface placeholder:text-outline" 
                   id="email" 
                   placeholder="jane@example.com" 
                   type="email"
@@ -127,7 +127,7 @@ export default function RegisterPage() {
                 </div>
                 <input 
                   required
-                  className="w-full pl-11 pr-4 py-2.5 bg-surface border border-outline-variant/30 rounded-[1rem] focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-300 font-body text-sm text-on-surface placeholder:text-outline" 
+                  className="w-full pl-11 pr-4 py-2.5 bg-surface border border-outline-variant/30 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-300 font-body text-sm text-on-surface placeholder:text-outline" 
                   id="password" 
                   placeholder="••••••••" 
                   type="password"
@@ -138,7 +138,7 @@ export default function RegisterPage() {
             </div>
             
             <button 
-              className="w-full py-3 px-6 rounded-full bg-gradient-to-br from-primary to-primary-container text-white font-manrope font-bold text-sm mt-3 hover:shadow-[0px_8px_16px_rgba(74,75,215,0.25)] transition-all duration-300 active:scale-[0.98] flex items-center justify-center" 
+              className="w-full py-3 px-6 rounded-md bg-gradient-to-br from-primary to-primary-container text-white font-manrope font-bold text-sm mt-3 hover:shadow-[0px_8px_16px_rgba(74,75,215,0.25)] transition-all duration-300 active:scale-[0.98] flex items-center justify-center" 
               type="submit"
               disabled={loading}
             >
@@ -155,11 +155,11 @@ export default function RegisterPage() {
           </div>
           
           <div className="mt-6 grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center gap-3 py-3 px-4 rounded-[1rem] bg-surface hover:bg-surface-container-high transition-colors border border-outline-variant/20 font-body font-medium text-sm text-on-surface" type="button">
+            <button className="flex items-center justify-center gap-3 py-3 px-4 rounded-md bg-surface hover:bg-surface-container-high transition-colors border border-outline-variant/20 font-body font-medium text-sm text-on-surface" type="button">
               <svg className="w-5 h-5" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
               Google
             </button>
-            <button className="flex items-center justify-center gap-3 py-3 px-4 rounded-[1rem] bg-surface hover:bg-surface-container-high transition-colors border border-outline-variant/20 font-body font-medium text-sm text-on-surface" type="button">
+            <button className="flex items-center justify-center gap-3 py-3 px-4 rounded-md bg-surface hover:bg-surface-container-high transition-colors border border-outline-variant/20 font-body font-medium text-sm text-on-surface" type="button">
               <svg className="w-5 h-5" fill="#0A66C2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0zM7.12 20.45H3.56V9h3.56v11.45zM5.34 7.43A2.06 2.06 0 1 1 5.34 3.3a2.06 2.06 0 1 1 0 4.13zM20.45 20.45h-3.56v-5.6c0-1.34-.03-3.06-1.87-3.06-1.87 0-2.15 1.46-2.15 2.96v5.7H9.31V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29z"/></svg>
               LinkedIn
             </button>
