@@ -35,16 +35,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(currentUser);
       
       if (currentUser) {
+        // Fallback to local storage for profile data due to DB issues
+        try {
+           const localData = localStorage.getItem(`profile_${currentUser.uid}`);
+           if (localData) {
+              setUserProfile(JSON.parse(localData));
+           } else {
+              setUserProfile({});
+           }
+        } catch(e) {
+           setUserProfile({});
+        }
+        setLoading(false);
+
+        // Keep DB as a backup read if it works, but don't overwrite if local data is richer
         unsubscribeProfile = onSnapshot(doc(db, 'users', currentUser.uid), (docSnap) => {
           if (docSnap.exists()) {
-             setUserProfile(docSnap.data() as UserProfile);
-          } else {
-             setUserProfile({});
+             const serverData = docSnap.data();
+             setUserProfile(prev => {
+                // Only merge if we don't have local data, preventing server rollback of cache
+                if (Object.keys(prev || {}).length === 0) return serverData as UserProfile;
+                return prev;
+             });
           }
-          setLoading(false);
         }, (error) => {
-          console.error("Error fetching user profile:", error);
-          setLoading(false);
+          console.warn("DB syncing error, relying purely on LocalStorage.", error.message);
         });
       } else {
         setUserProfile(null);
@@ -59,8 +74,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
+  // Provide a method to save to context/localStorage
+  const saveProfileLocal = (uid: string, data: Partial<UserProfile>) => {
+     setUserProfile(prev => {
+        const merged = { ...prev, ...data };
+        localStorage.setItem(`profile_${uid}`, JSON.stringify(merged));
+        return merged;
+     });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, userProfile, loading }}>
+    <AuthContext.Provider value={{ user, userProfile, loading, saveProfileLocal } as any}>
       {children}
     </AuthContext.Provider>
   );

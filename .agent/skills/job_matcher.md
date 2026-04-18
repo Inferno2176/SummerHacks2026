@@ -1,27 +1,20 @@
 ---
-description: Skill to compare a parsed resume against a Job Description.
+description: Skill to compute Resonance Gaps between a Master Resume and a Job Description.
 ---
 
 # Skill: Job Matcher
 
 ## Objective
-Analyze a candidate's profile against a Job Description (JD) to determine suitability and identify gaps.
+Analyze the provided `resume` against the target `jd` (Job Description) to determine Resonance Gaps.
 
-## Schema
+## Output Format
+Return a strict JSON object mapping out the differences:
 {
-  "matchPercentage": number,
-  "keyMatches": ["string"],
-  "missingSkills": ["string"],
-  "reasoning": "string"
+  "missingKeywords": ["string"],
+  "underemphasizedSkills": ["string"],
+  "resonanceScore": "number (0-100)"
 }
 
-## Prompt Details
-- Input: Parsed Resume (JSON) + Raw Job Description (Text).
-- Calculate a realistic match percentage (0-100).
-- `keyMatches`: List strings from the resume that directly satisfy JD requirements.
-- `missingSkills`: List required skills/tech from the JD that are not present in the resume.
-- `reasoning`: A 2-3 sentence summary of why this candidate is or isn't a good fit.
-
-## Constraints
-- Follow all rules in `.agent/rules/api_constraints.md`.
-- Output ONLY the JSON object.
+## Output Constraints (CRITICAL)
+- **Self-Correction Rule:** Check the output before returning. If it contains ` ```json ` or any text outside the `{ }`, YOU MUST DELETE IT. Return ONLY the raw JSON object.
+- Never wrap the response in markdown blocks.

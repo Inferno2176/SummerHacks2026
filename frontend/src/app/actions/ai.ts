@@ -42,7 +42,7 @@ ${JSON.stringify(inputData, null, 2)}
     if (!apiKey) throw new Error("Gemini_API_KEY is not defined in environment.");
 
     // The Gemini endpoint (using v1beta for stability/features)
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
     const response = await fetch(url, {
       method: 'POST',
