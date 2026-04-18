@@ -76,7 +76,7 @@ export default function DashboardPage() {
         </section>
 
         {/* Smart Suggestion Bento */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* AI Suggestion Card - HIGH CONTRAST */}
           {loading ? (
             <div className="md:col-span-2 bg-surface-container rounded-3xl p-8 relative overflow-hidden flex flex-col justify-between group border border-outline-variant/10 animate-pulse min-h-[300px]">
@@ -107,7 +107,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="relative z-10 mt-10 flex justify-end">
-                <Link href="/profile" className="px-8 py-4 bg-white text-tertiary rounded-md font-black text-xs uppercase tracking-widest hover:opacity-90 transition-all flex items-center space-x-2 shadow-xl active:scale-[0.98]">
+                <Link href="/onboarding" className="px-8 py-4 bg-white text-tertiary rounded-md font-black text-xs uppercase tracking-widest hover:opacity-90 transition-all flex items-center space-x-2 shadow-xl active:scale-[0.98]">
                   <span>Set Up Profile</span>
                   <span className="material-symbols-outlined text-sm">arrow_forward</span>
                 </Link>
@@ -144,25 +144,37 @@ export default function DashboardPage() {
           )}
 
           {/* Mini Stats / Progress */}
-          <div className="bg-surface-container-lowest rounded-md p-8 ambient-shadow flex flex-col justify-between relative overflow-hidden border border-outline-variant/10">
+          <div className="md:col-span-1 bg-surface-container-lowest rounded-md p-8 ambient-shadow flex flex-col justify-between relative overflow-hidden border border-outline-variant/10">
             <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary-container/10 rounded-full blur-2xl pointer-events-none"></div>
             <div>
               <h4 className="font-manrope font-black text-lg text-on-surface mb-1 uppercase tracking-tight">Application Pipeline</h4>
-              <p className="text-xs text-on-surface-variant font-black opacity-60 uppercase tracking-tighter">12 Active Opportunities</p>
+              <p className="text-[10px] text-on-surface-variant font-black opacity-80 uppercase tracking-widest">12 Active Opps</p>
             </div>
             <div className="flex-1 flex items-center justify-center py-6">
               {/* Faux Donut Chart */}
-              <div className="relative w-32 h-32 flex items-center justify-center rounded-full before:absolute before:inset-0 before:rounded-full before:border-[12px] before:border-surface-container-high after:absolute after:inset-0 after:rounded-full after:border-[12px] after:border-secondary after:border-t-transparent after:border-r-transparent after:rotate-45">
+              <div className="relative w-28 h-28 flex items-center justify-center rounded-full before:absolute before:inset-0 before:rounded-full before:border-[10px] before:border-surface-container-high after:absolute after:inset-0 after:rounded-full after:border-[10px] after:border-secondary after:border-t-transparent after:border-r-transparent after:rotate-45">
                 <div className="text-center">
-                   <div className="text-3xl font-black font-manrope text-on-surface leading-none mt-2">3</div>
-                   <div className="text-[9px] uppercase font-black tracking-widest text-secondary mt-1">Interviews</div>
+                   <div className="text-2xl font-black font-manrope text-on-surface leading-none mt-2">3</div>
+                   <div className="text-[8px] uppercase font-black tracking-widest text-secondary mt-1">Intvs</div>
                 </div>
               </div>
             </div>
-            <div className="flex justify-between items-center text-[9px] font-black uppercase tracking-widest text-on-surface-variant/70">
-              <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-secondary mr-2"></span>Advancing</span>
-              <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-surface-container-high mr-2"></span>In Review</span>
-            </div>
+          </div>
+          
+          {/* Get Started Resume Card */}
+          <div className="md:col-span-1 bg-surface-container-lowest rounded-md p-6 ambient-shadow border border-outline-variant/10 group hover:border-primary/50 transition-all flex flex-col justify-between">
+             <div>
+                <div className="w-10 h-10 rounded-md bg-secondary/10 flex items-center justify-center mb-4">
+                  <span className="material-symbols-outlined text-secondary text-xl">description</span>
+                </div>
+                <h4 className="font-manrope font-black text-base md:text-lg text-on-surface leading-tight tracking-tight uppercase mb-2">Get Started</h4>
+                <p className="text-[11px] font-medium text-on-surface-variant leading-relaxed">Instantly generate a tailored professional resume dynamically built from your onboarding questionnaire nodes.</p>
+             </div>
+             
+             <Link href="/resume" className="mt-6 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-secondary group-hover:text-primary transition-colors border border-outline-variant/20 px-4 py-2.5 rounded-md hover:bg-surface w-full">
+                <span>Build Resume</span>
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+             </Link>
           </div>
         </section>
 
