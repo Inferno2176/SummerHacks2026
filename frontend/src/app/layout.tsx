@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
+import NavbarWrapper from "@/components/NavbarWrapper";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
@@ -9,9 +11,6 @@ export const metadata: Metadata = {
   title: "LandMyJob",
   description: "The Intelligent Career Concierge",
 };
-
-import { AuthProvider } from "@/context/AuthContext";
-import HorizontalNavbar from "@/components/HorizontalNavbar";
 
 export default function RootLayout({
   children,
@@ -25,7 +24,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${manrope.variable} antialiased flex flex-col min-h-screen`}>
         <AuthProvider>
-          <HorizontalNavbar />
+          <NavbarWrapper />
           <div className="flex-1 flex flex-col">
             {children}
           </div>
